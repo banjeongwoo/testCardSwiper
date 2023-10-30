@@ -132,7 +132,7 @@
     CardDetailViewController *controller = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"CardDetailViewController"];
     controller.modalPresentationStyle = UIModalPresentationFullScreen;
    
-    [controller setData:@(10)];
+    [controller setData:@(3)];
     [self.navigationController presentViewController:controller
                                             animated:YES
                                             completion:nil];

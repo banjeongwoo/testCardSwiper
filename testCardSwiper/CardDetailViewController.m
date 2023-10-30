@@ -60,6 +60,14 @@
     
     [_collectionView reloadData];
     
+    
+    CGFloat diff = self.collectionView.frame.size.height - self.collectionView.contentSize.height;
+    if (diff > 0) {
+        self.collectionView.contentInset = UIEdgeInsetsMake(diff, 0, 0, 0);
+    }
+    
+    
+    
 //    CGSize contentSize = [self.collectionView.collectionViewLayout collectionViewContentSize];
 //    if (contentSize.height > self.collectionView.bounds.size.height) {
 //        CGPoint targetContentOffset = CGPointMake(0.0f, contentSize.height - self.collectionView.bounds.size.height);
@@ -86,11 +94,16 @@
 //        [self.collectionView setContentOffset:targetContentOffset];
 //    }
     
-    CGSize contentSize = [self.collectionView.collectionViewLayout collectionViewContentSize];
-       if (contentSize.height > self.collectionView.bounds.size.height) {
-           CGPoint targetContentOffset = CGPointMake(0.0f, contentSize.height - self.collectionView.bounds.size.height);
-           [self.collectionView setContentOffset:targetContentOffset];
-       }
+//    CGSize contentSize = [self.collectionView.collectionViewLayout collectionViewContentSize];
+//       if (contentSize.height > self.collectionView.bounds.size.height) {
+//           CGPoint targetContentOffset = CGPointMake(0.0f, contentSize.height - self.collectionView.bounds.size.height);
+//           [self.collectionView setContentOffset:targetContentOffset];
+//       }
+    
+    CGFloat diff = self.collectionView.frame.size.height - self.collectionView.contentSize.height;
+    if (diff > 0) {
+        self.collectionView.contentInset = UIEdgeInsetsMake(diff, 0, 0, 0);
+    }
 }
 
 - (IBAction)buttonUpInside:(id)sender {
