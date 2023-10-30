@@ -29,12 +29,12 @@
 //    layout.itemSize = CGSizeMake(w-60, 300);
 //    [_collectionView setCollectionViewLayout:layout];
     
-    StickCollectionViewFlowLayout *flowLayout = [[StickCollectionViewFlowLayout alloc] init];
-    [flowLayout setItemSize:CGSizeMake(w-60, 300)];
-    flowLayout.minimumInteritemSpacing = 0;
-    [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
-    flowLayout.firstItemTransform = 30;
-    [_collectionView setCollectionViewLayout:flowLayout];
+//    StickCollectionViewFlowLayout *flowLayout = [[StickCollectionViewFlowLayout alloc] init];
+//    [flowLayout setItemSize:CGSizeMake(w-60, 300)];
+//    flowLayout.minimumInteritemSpacing = 0;
+//    [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
+//    flowLayout.firstItemTransform = 30;
+//    [_collectionView setCollectionViewLayout:flowLayout];
     
   
     
@@ -59,6 +59,38 @@
     _dataList = [array mutableCopy];
     
     [_collectionView reloadData];
+    
+//    CGSize contentSize = [self.collectionView.collectionViewLayout collectionViewContentSize];
+//    if (contentSize.height > self.collectionView.bounds.size.height) {
+//        CGPoint targetContentOffset = CGPointMake(0.0f, contentSize.height - self.collectionView.bounds.size.height);
+//        [self.collectionView setContentOffset:targetContentOffset];
+//    }
+    
+//    CGSize contentSize = [self.collectionView.collectionViewLayout collectionViewContentSize];
+//        if (contentSize.height > self.collectionView.bounds.size.height) {
+//            CGPoint targetContentOffset = CGPointMake(0.0f, contentSize.height - self.collectionView.bounds.size.height);
+//            [self.collectionView setContentOffset:targetContentOffset];
+//        }
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+
+    // ---- autolayout ----
+    [self.view layoutIfNeeded];
+
+//    CGSize contentSize = [self.collectionView.collectionViewLayout collectionViewContentSize];
+//    if (contentSize.height > self.collectionView.bounds.size.height) {
+//        CGPoint targetContentOffset = CGPointMake(0.0f, contentSize.height - self.collectionView.bounds.size.height);
+//        [self.collectionView setContentOffset:targetContentOffset];
+//    }
+    
+    CGSize contentSize = [self.collectionView.collectionViewLayout collectionViewContentSize];
+       if (contentSize.height > self.collectionView.bounds.size.height) {
+           CGPoint targetContentOffset = CGPointMake(0.0f, contentSize.height - self.collectionView.bounds.size.height);
+           [self.collectionView setContentOffset:targetContentOffset];
+       }
 }
 
 - (IBAction)buttonUpInside:(id)sender {
@@ -150,6 +182,8 @@
 
 - (void)updateCellAttributes:(UICollectionViewLayoutAttributes *)attributes withSectionHeader:(UICollectionViewLayoutAttributes *)headerAttributes {
     
+   
+    
     CGFloat minY = CGRectGetMinY(self.collectionView.bounds) + self.collectionView.contentInset.top;
     CGFloat maxY = attributes.frame.origin.y - CGRectGetHeight(headerAttributes.bounds);
     CGFloat finalY = MAX(minY, maxY);
@@ -165,6 +199,8 @@
     origin.y = finalY;
     attributes.frame = (CGRect){origin, attributes.frame.size};
     attributes.zIndex = attributes.indexPath.row;
+    
+    NSLog(@"%lu : %@", attributes.indexPath.row, NSStringFromCGRect(attributes.frame));
 
 }
 
