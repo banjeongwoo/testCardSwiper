@@ -1,0 +1,666 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		46D2FE5A2AEFC0930004CC11 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D2FE592AEFC0930004CC11 /* MainViewController.m */; };
+		C81451402AEF8B4C00366C05 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = C814513F2AEF8B4C00366C05 /* Message.m */; };
+		C814514C2AEF8E0800366C05 /* UIColor+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = C814514B2AEF8E0800366C05 /* UIColor+Extension.m */; };
+		C81451572AEFA2D100366C05 /* CardDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C81451562AEFA2D100366C05 /* CardDetailViewController.m */; };
+		C870183F2AE5F22500579935 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C870183E2AE5F22500579935 /* AppDelegate.m */; };
+		C87018452AE5F22500579935 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C87018442AE5F22500579935 /* ViewController.m */; };
+		C87018482AE5F22500579935 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C87018462AE5F22500579935 /* Main.storyboard */; };
+		C870184A2AE5F22900579935 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C87018492AE5F22900579935 /* Assets.xcassets */; };
+		C870184D2AE5F22900579935 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C870184B2AE5F22900579935 /* LaunchScreen.storyboard */; };
+		C87018502AE5F22900579935 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C870184F2AE5F22900579935 /* main.m */; };
+		C870185A2AE5F22900579935 /* testCardSwiperTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C87018592AE5F22900579935 /* testCardSwiperTests.m */; };
+		C87018642AE5F22900579935 /* testCardSwiperUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = C87018632AE5F22900579935 /* testCardSwiperUITests.m */; };
+		C87018662AE5F22900579935 /* testCardSwiperUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C87018652AE5F22900579935 /* testCardSwiperUITestsLaunchTests.m */; };
+		C87018752AE5F4B900579935 /* CardView.m in Sources */ = {isa = PBXBuildFile; fileRef = C87018742AE5F4B900579935 /* CardView.m */; };
+		C87018782AE5F6BA00579935 /* SwipeCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = C87018772AE5F6BA00579935 /* SwipeCardView.m */; };
+		C87187F82AE8B0FF0001C00E /* PayRegCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = C87187F72AE8B0FF0001C00E /* PayRegCardView.m */; };
+		C87187FB2AE8E2900001C00E /* PayRcmdCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = C87187FA2AE8E2900001C00E /* PayRcmdCardView.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C87018562AE5F22900579935 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C87018322AE5F22500579935 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C87018392AE5F22500579935;
+			remoteInfo = testCardSwiper;
+		};
+		C87018602AE5F22900579935 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C87018322AE5F22500579935 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C87018392AE5F22500579935;
+			remoteInfo = testCardSwiper;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		46D2FE552AEFC0360004CC11 /* testCardSwiper-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "testCardSwiper-Bridging-Header.h"; sourceTree = "<group>"; };
+		46D2FE582AEFC0930004CC11 /* MainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		46D2FE592AEFC0930004CC11 /* MainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		C814513E2AEF8B4C00366C05 /* Message.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
+		C814513F2AEF8B4C00366C05 /* Message.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
+		C814514A2AEF8E0800366C05 /* UIColor+Extension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIColor+Extension.h"; sourceTree = "<group>"; };
+		C814514B2AEF8E0800366C05 /* UIColor+Extension.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Extension.m"; sourceTree = "<group>"; };
+		C81451552AEFA2D100366C05 /* CardDetailViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardDetailViewController.h; sourceTree = "<group>"; };
+		C81451562AEFA2D100366C05 /* CardDetailViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardDetailViewController.m; sourceTree = "<group>"; };
+		C870183A2AE5F22500579935 /* testCardSwiper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = testCardSwiper.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C870183D2AE5F22500579935 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		C870183E2AE5F22500579935 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		C87018432AE5F22500579935 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		C87018442AE5F22500579935 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		C87018472AE5F22500579935 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		C87018492AE5F22900579935 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C870184C2AE5F22900579935 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		C870184E2AE5F22900579935 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C870184F2AE5F22900579935 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		C87018552AE5F22900579935 /* testCardSwiperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = testCardSwiperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C87018592AE5F22900579935 /* testCardSwiperTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = testCardSwiperTests.m; sourceTree = "<group>"; };
+		C870185F2AE5F22900579935 /* testCardSwiperUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = testCardSwiperUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C87018632AE5F22900579935 /* testCardSwiperUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = testCardSwiperUITests.m; sourceTree = "<group>"; };
+		C87018652AE5F22900579935 /* testCardSwiperUITestsLaunchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = testCardSwiperUITestsLaunchTests.m; sourceTree = "<group>"; };
+		C87018732AE5F4B900579935 /* CardView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CardView.h; sourceTree = "<group>"; };
+		C87018742AE5F4B900579935 /* CardView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardView.m; sourceTree = "<group>"; };
+		C87018762AE5F6BA00579935 /* SwipeCardView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwipeCardView.h; sourceTree = "<group>"; };
+		C87018772AE5F6BA00579935 /* SwipeCardView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SwipeCardView.m; sourceTree = "<group>"; };
+		C87187F62AE8B0FF0001C00E /* PayRegCardView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PayRegCardView.h; sourceTree = "<group>"; };
+		C87187F72AE8B0FF0001C00E /* PayRegCardView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PayRegCardView.m; sourceTree = "<group>"; };
+		C87187F92AE8E2900001C00E /* PayRcmdCardView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PayRcmdCardView.h; sourceTree = "<group>"; };
+		C87187FA2AE8E2900001C00E /* PayRcmdCardView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PayRcmdCardView.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C87018372AE5F22500579935 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C87018522AE5F22900579935 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C870185C2AE5F22900579935 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C87018312AE5F22500579935 = {
+			isa = PBXGroup;
+			children = (
+				C870183C2AE5F22500579935 /* testCardSwiper */,
+				C87018582AE5F22900579935 /* testCardSwiperTests */,
+				C87018622AE5F22900579935 /* testCardSwiperUITests */,
+				C870183B2AE5F22500579935 /* Products */,
+				46D2FE552AEFC0360004CC11 /* testCardSwiper-Bridging-Header.h */,
+			);
+			sourceTree = "<group>";
+		};
+		C870183B2AE5F22500579935 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C870183A2AE5F22500579935 /* testCardSwiper.app */,
+				C87018552AE5F22900579935 /* testCardSwiperTests.xctest */,
+				C870185F2AE5F22900579935 /* testCardSwiperUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C870183C2AE5F22500579935 /* testCardSwiper */ = {
+			isa = PBXGroup;
+			children = (
+				C87018722AE5F49700579935 /* SwiperCardView */,
+				C870183D2AE5F22500579935 /* AppDelegate.h */,
+				C870183E2AE5F22500579935 /* AppDelegate.m */,
+				C87018432AE5F22500579935 /* ViewController.h */,
+				C87018442AE5F22500579935 /* ViewController.m */,
+				C81451552AEFA2D100366C05 /* CardDetailViewController.h */,
+				C81451562AEFA2D100366C05 /* CardDetailViewController.m */,
+				46D2FE582AEFC0930004CC11 /* MainViewController.h */,
+				46D2FE592AEFC0930004CC11 /* MainViewController.m */,
+				C87018462AE5F22500579935 /* Main.storyboard */,
+				C87018492AE5F22900579935 /* Assets.xcassets */,
+				C870184B2AE5F22900579935 /* LaunchScreen.storyboard */,
+				C870184E2AE5F22900579935 /* Info.plist */,
+				C870184F2AE5F22900579935 /* main.m */,
+				C814513E2AEF8B4C00366C05 /* Message.h */,
+				C814513F2AEF8B4C00366C05 /* Message.m */,
+				C814514A2AEF8E0800366C05 /* UIColor+Extension.h */,
+				C814514B2AEF8E0800366C05 /* UIColor+Extension.m */,
+			);
+			path = testCardSwiper;
+			sourceTree = "<group>";
+		};
+		C87018582AE5F22900579935 /* testCardSwiperTests */ = {
+			isa = PBXGroup;
+			children = (
+				C87018592AE5F22900579935 /* testCardSwiperTests.m */,
+			);
+			path = testCardSwiperTests;
+			sourceTree = "<group>";
+		};
+		C87018622AE5F22900579935 /* testCardSwiperUITests */ = {
+			isa = PBXGroup;
+			children = (
+				C87018632AE5F22900579935 /* testCardSwiperUITests.m */,
+				C87018652AE5F22900579935 /* testCardSwiperUITestsLaunchTests.m */,
+			);
+			path = testCardSwiperUITests;
+			sourceTree = "<group>";
+		};
+		C87018722AE5F49700579935 /* SwiperCardView */ = {
+			isa = PBXGroup;
+			children = (
+				C87018732AE5F4B900579935 /* CardView.h */,
+				C87018742AE5F4B900579935 /* CardView.m */,
+				C87018762AE5F6BA00579935 /* SwipeCardView.h */,
+				C87018772AE5F6BA00579935 /* SwipeCardView.m */,
+				C87187F62AE8B0FF0001C00E /* PayRegCardView.h */,
+				C87187F72AE8B0FF0001C00E /* PayRegCardView.m */,
+				C87187F92AE8E2900001C00E /* PayRcmdCardView.h */,
+				C87187FA2AE8E2900001C00E /* PayRcmdCardView.m */,
+			);
+			path = SwiperCardView;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C87018392AE5F22500579935 /* testCardSwiper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C87018692AE5F22900579935 /* Build configuration list for PBXNativeTarget "testCardSwiper" */;
+			buildPhases = (
+				C87018362AE5F22500579935 /* Sources */,
+				C87018372AE5F22500579935 /* Frameworks */,
+				C87018382AE5F22500579935 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = testCardSwiper;
+			productName = testCardSwiper;
+			productReference = C870183A2AE5F22500579935 /* testCardSwiper.app */;
+			productType = "com.apple.product-type.application";
+		};
+		C87018542AE5F22900579935 /* testCardSwiperTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C870186C2AE5F22900579935 /* Build configuration list for PBXNativeTarget "testCardSwiperTests" */;
+			buildPhases = (
+				C87018512AE5F22900579935 /* Sources */,
+				C87018522AE5F22900579935 /* Frameworks */,
+				C87018532AE5F22900579935 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C87018572AE5F22900579935 /* PBXTargetDependency */,
+			);
+			name = testCardSwiperTests;
+			productName = testCardSwiperTests;
+			productReference = C87018552AE5F22900579935 /* testCardSwiperTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		C870185E2AE5F22900579935 /* testCardSwiperUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C870186F2AE5F22900579935 /* Build configuration list for PBXNativeTarget "testCardSwiperUITests" */;
+			buildPhases = (
+				C870185B2AE5F22900579935 /* Sources */,
+				C870185C2AE5F22900579935 /* Frameworks */,
+				C870185D2AE5F22900579935 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C87018612AE5F22900579935 /* PBXTargetDependency */,
+			);
+			name = testCardSwiperUITests;
+			productName = testCardSwiperUITests;
+			productReference = C870185F2AE5F22900579935 /* testCardSwiperUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C87018322AE5F22500579935 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					C87018392AE5F22500579935 = {
+						CreatedOnToolsVersion = 14.3.1;
+						LastSwiftMigration = 1430;
+					};
+					C87018542AE5F22900579935 = {
+						CreatedOnToolsVersion = 14.3.1;
+						TestTargetID = C87018392AE5F22500579935;
+					};
+					C870185E2AE5F22900579935 = {
+						CreatedOnToolsVersion = 14.3.1;
+						TestTargetID = C87018392AE5F22500579935;
+					};
+				};
+			};
+			buildConfigurationList = C87018352AE5F22500579935 /* Build configuration list for PBXProject "testCardSwiper" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C87018312AE5F22500579935;
+			productRefGroup = C870183B2AE5F22500579935 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C87018392AE5F22500579935 /* testCardSwiper */,
+				C87018542AE5F22900579935 /* testCardSwiperTests */,
+				C870185E2AE5F22900579935 /* testCardSwiperUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C87018382AE5F22500579935 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C870184D2AE5F22900579935 /* LaunchScreen.storyboard in Resources */,
+				C870184A2AE5F22900579935 /* Assets.xcassets in Resources */,
+				C87018482AE5F22500579935 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C87018532AE5F22900579935 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C870185D2AE5F22900579935 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C87018362AE5F22500579935 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C87187FB2AE8E2900001C00E /* PayRcmdCardView.m in Sources */,
+				C87018452AE5F22500579935 /* ViewController.m in Sources */,
+				46D2FE5A2AEFC0930004CC11 /* MainViewController.m in Sources */,
+				C814514C2AEF8E0800366C05 /* UIColor+Extension.m in Sources */,
+				C870183F2AE5F22500579935 /* AppDelegate.m in Sources */,
+				C87187F82AE8B0FF0001C00E /* PayRegCardView.m in Sources */,
+				C87018752AE5F4B900579935 /* CardView.m in Sources */,
+				C87018782AE5F6BA00579935 /* SwipeCardView.m in Sources */,
+				C81451572AEFA2D100366C05 /* CardDetailViewController.m in Sources */,
+				C81451402AEF8B4C00366C05 /* Message.m in Sources */,
+				C87018502AE5F22900579935 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C87018512AE5F22900579935 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C870185A2AE5F22900579935 /* testCardSwiperTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C870185B2AE5F22900579935 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C87018662AE5F22900579935 /* testCardSwiperUITestsLaunchTests.m in Sources */,
+				C87018642AE5F22900579935 /* testCardSwiperUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C87018572AE5F22900579935 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C87018392AE5F22500579935 /* testCardSwiper */;
+			targetProxy = C87018562AE5F22900579935 /* PBXContainerItemProxy */;
+		};
+		C87018612AE5F22900579935 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C87018392AE5F22500579935 /* testCardSwiper */;
+			targetProxy = C87018602AE5F22900579935 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		C87018462AE5F22500579935 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C87018472AE5F22500579935 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		C870184B2AE5F22900579935 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C870184C2AE5F22900579935 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C87018672AE5F22900579935 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		C87018682AE5F22900579935 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C870186A2AE5F22900579935 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = U2QW4D9H62;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = testCardSwiper/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = kr.co.bosystems.testCardSwiper;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "testCardSwiper-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C870186B2AE5F22900579935 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = U2QW4D9H62;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = testCardSwiper/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = kr.co.bosystems.testCardSwiper;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "testCardSwiper-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		C870186D2AE5F22900579935 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = U2QW4D9H62;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = kr.co.bosystems.testCardSwiperTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/testCardSwiper.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/testCardSwiper";
+			};
+			name = Debug;
+		};
+		C870186E2AE5F22900579935 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = U2QW4D9H62;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = kr.co.bosystems.testCardSwiperTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/testCardSwiper.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/testCardSwiper";
+			};
+			name = Release;
+		};
+		C87018702AE5F22900579935 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = U2QW4D9H62;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = kr.co.bosystems.testCardSwiperUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = testCardSwiper;
+			};
+			name = Debug;
+		};
+		C87018712AE5F22900579935 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = U2QW4D9H62;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = kr.co.bosystems.testCardSwiperUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = testCardSwiper;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C87018352AE5F22500579935 /* Build configuration list for PBXProject "testCardSwiper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C87018672AE5F22900579935 /* Debug */,
+				C87018682AE5F22900579935 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C87018692AE5F22900579935 /* Build configuration list for PBXNativeTarget "testCardSwiper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C870186A2AE5F22900579935 /* Debug */,
+				C870186B2AE5F22900579935 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C870186C2AE5F22900579935 /* Build configuration list for PBXNativeTarget "testCardSwiperTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C870186D2AE5F22900579935 /* Debug */,
+				C870186E2AE5F22900579935 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C870186F2AE5F22900579935 /* Build configuration list for PBXNativeTarget "testCardSwiperUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C87018702AE5F22900579935 /* Debug */,
+				C87018712AE5F22900579935 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C87018322AE5F22500579935 /* Project object */;
+}
