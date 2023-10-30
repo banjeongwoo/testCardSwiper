@@ -19,4 +19,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+@interface StickCollectionViewFlowLayout : UICollectionViewFlowLayout
+@property (nonatomic, assign) CGFloat firstItemTransform;
+@end
+
 NS_ASSUME_NONNULL_END
