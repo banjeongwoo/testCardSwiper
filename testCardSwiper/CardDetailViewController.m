@@ -71,7 +71,11 @@
     
     //[_collectionView setContentOffset:CGPointMake(0, CGFLOAT_MAX)];
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self.collectionView performBatchUpdates:^{} completion:^(BOOL finished) {
+        [self.collectionView performBatchUpdates:^{
+            //invalidateLayout
+            [self.collectionView layoutIfNeeded];
+            [self.collectionView setNeedsLayout];
+        } completion:^(BOOL finished) {
             if(finished){
                 NSIndexPath *indexPath = [NSIndexPath indexPathForItem:self.dataList.count-1 inSection:0];
                 [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
@@ -419,9 +423,9 @@ for item in 0..<numberOfItems {
     
     NSInteger numberOfItems = [self.collectionView numberOfItemsInSection:0];
     
-    NSInteger featuredItemIndex = MAX(0, (int)(self.collectionView.contentOffset.y/_dragOffset));
+//    NSInteger featuredItemIndex = MAX(0, (int)(self.collectionView.contentOffset.y/_dragOffset));
 
-    CGFloat nextItemPercentageOffset = (self.collectionView.contentOffset.y / _dragOffset) - (CGFloat)featuredItemIndex;
+  //  CGFloat nextItemPercentageOffset = (self.collectionView.contentOffset.y / _dragOffset) - (CGFloat)featuredItemIndex;
     
     CGFloat y = 0;
     
@@ -431,6 +435,8 @@ for item in 0..<numberOfItems {
     NSInteger lastVisibleCardIndex = (int) (fabs(self.collectionView.contentOffset.y)+self.collectionView.bounds.size.height)/(_featuredHeight-50);
     
 //    NSLog(@"jwban featuredItemIndex %lu nextItemPercentageOffset: %lu", featuredItemIndex,lastVisibleCardIndex);
+    NSLog(@"jwban layoutAttributesForElementsInRect !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    
     NSLog(@"jwban topVisibleCardIndex %lu lastVisibleCardIndex: %lu", topVisibleCardIndex, lastVisibleCardIndex);
     
 //    for(NSInteger item = 0; item < topVisibleCardIndex-1; item++){
@@ -467,6 +473,30 @@ for item in 0..<numberOfItems {
         [layoutAttributes addObject:attributes];
     }
     
+    NSLog(@"jwban layoutAttributesForElementsInRect !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! end");
+    NSLog(@"jwban layoutAttributesForElementsInRect !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! end");
+    NSLog(@"jwban layoutAttributesForElementsInRect !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! end");
+    NSLog(@"jwban layoutAttributesForElementsInRect !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! end");
+    
+    //https://stackoverflow.com/questions/39390979/how-to-make-the-center-cell-of-the-uicollectionview-overlap-the-other-two-cells
+    /*
+     guard let collectionView = self.collectionView else { return attributes }
+           
+            let collectionCenter = collectionView.frame.size.height/2
+            let offset = collectionView.contentOffset.y
+            let normalizedCenter = (attributes.center.y) - offset
+
+            let maxDistance = ( self.itemSize.height) + self.minimumLineSpacing
+            let distance = min(abs(collectionCenter - normalizedCenter), maxDistance)
+            let ratio = (maxDistance - distance)/maxDistance
+
+            let alpha = ratio * (1 - self.sideItemAlpha) + self.sideItemAlpha
+            let scale = ratio * (1 - self.sideItemScale) + self.sideItemScale
+            attributes.alpha = alpha
+            attributes.transform3D = CATransform3DScale(CATransform3DIdentity, scale, scale, 1)
+
+            return attributes
+     */
 //    for(NSInteger item = 0; item < numberOfItems; item++){
 //        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:item inSection:0];
 //
@@ -590,7 +620,7 @@ for item in 0..<numberOfItems {
 //        else {
 //            attribute.frame = currentFrame
 //        }
-
+ //https://stackoverflow.com/questions/76138102/how-to-center-spinner-style-card-view-in-collectionview-cell-after-scrolled
 /*
  NSMutableArray *attributes = [@[] mutableCopy];
  NSArray *layoutAttributes = [super layoutAttributesForElementsInRect:rect];
@@ -652,24 +682,24 @@ for item in 0..<numberOfItems {
     
     CGFloat ratio = (maxDistance - distance)/maxDistance;
     
-    NSLog(@"updateCellAttributes idx : %lu center :%f %f %f %f", attributes.indexPath.row, center, attributes.center.x, contentOffset, ratio);
+   // NSLog(@"updateCellAttributes idx : %lu center :%f %f %f %f", attributes.indexPath.row, center, attributes.center.x, contentOffset, ratio);
     
     
-    NSLog(@"contentSize.height : %f, %f, %f",  self.collectionView.contentSize.height, CGRectGetMinY(self.collectionView.bounds) , self.collectionView.contentInset.top);
+   // NSLog(@"contentSize.height : %f, %f, %f",  self.collectionView.contentSize.height, CGRectGetMinY(self.collectionView.bounds) , self.collectionView.contentInset.top);
     
     CGFloat contentHeight = self.collectionView.contentSize.height;
     
     CGFloat minY = CGRectGetMinY(self.collectionView.bounds) + self.collectionView.contentInset.top;
     CGFloat maxView = CGRectGetMaxY(self.collectionView.bounds);
     
-    NSLog(@"%lu minY : %f maxView : %f %@", attributes.indexPath.row, minY,maxView , NSStringFromCGRect(self.collectionView.bounds));
+  //  NSLog(@"%lu minY : %f maxView : %f %@", attributes.indexPath.row, minY,maxView , NSStringFromCGRect(self.collectionView.bounds));
     
     CGFloat maxY = attributes.frame.origin.y; //- CGRectGetHeight(headerAttributes.bounds);
     CGFloat finalY = MAX(minY, maxY);
     
     CGPoint origin = attributes.frame.origin;
     
-    NSLog(@"%lu minY : %f maxY : %f finalY : %f", attributes.indexPath.row, minY, maxY, finalY);
+  //  NSLog(@"%lu minY : %f maxY : %f finalY : %f", attributes.indexPath.row, minY, maxY, finalY);
     
 //    finalY = contentHeight - (attributes.indexPath.row + 1) * CGRectGetHeight(headerAttributes.bounds);
     
