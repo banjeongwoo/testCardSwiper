@@ -47,7 +47,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="EX7-Qx-eiP">
-                                <rect key="frame" x="0.0" y="59" width="393" height="714"/>
+                                <rect key="frame" x="0.0" y="59" width="393" height="685"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <collectionViewLayout key="collectionViewLayout" id="11P-x2-3sv" customClass="StickCollectionViewFlowLayout"/>
                                 <cells>
@@ -64,10 +64,33 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="LwN-3M-R0c">
+                                                    <rect key="frame" x="250" y="48" width="100" height="40"/>
+                                                    <subviews>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nSG-Rk-f7R">
+                                                            <rect key="frame" x="0.0" y="19.666666666666671" width="100" height="1"/>
+                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="1" id="IZs-yf-lpA"/>
+                                                            </constraints>
+                                                        </view>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="trailing" secondItem="nSG-Rk-f7R" secondAttribute="trailing" id="3nR-Ec-BpH"/>
+                                                        <constraint firstItem="nSG-Rk-f7R" firstAttribute="centerX" secondItem="LwN-3M-R0c" secondAttribute="centerX" id="6bG-3t-CDk"/>
+                                                        <constraint firstItem="nSG-Rk-f7R" firstAttribute="centerY" secondItem="LwN-3M-R0c" secondAttribute="centerY" id="F0W-Ki-x8b"/>
+                                                        <constraint firstItem="nSG-Rk-f7R" firstAttribute="leading" secondItem="LwN-3M-R0c" secondAttribute="leading" id="Xn9-GX-Pdr"/>
+                                                        <constraint firstAttribute="height" constant="40" id="eyz-ln-Esp"/>
+                                                        <constraint firstAttribute="width" constant="100" id="uKW-Yx-a2D"/>
+                                                    </constraints>
+                                                </view>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="aRw-4Q-Y9H" firstAttribute="centerX" secondItem="ahH-55-hbh" secondAttribute="centerX" id="Ucc-uw-UT7"/>
+                                                <constraint firstAttribute="trailing" secondItem="LwN-3M-R0c" secondAttribute="trailing" constant="10" id="gEf-JH-sha"/>
                                                 <constraint firstItem="aRw-4Q-Y9H" firstAttribute="centerY" secondItem="ahH-55-hbh" secondAttribute="centerY" id="lOZ-jp-YDL"/>
+                                                <constraint firstAttribute="bottom" secondItem="LwN-3M-R0c" secondAttribute="bottom" constant="40" id="qbi-H2-XbU"/>
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="360" height="128"/>
@@ -110,11 +133,14 @@
                             <constraint firstItem="EX7-Qx-eiP" firstAttribute="leading" secondItem="UvR-Km-MDh" secondAttribute="leading" id="HuF-HB-D9A"/>
                             <constraint firstItem="UvR-Km-MDh" firstAttribute="trailing" secondItem="EX7-Qx-eiP" secondAttribute="trailing" id="NuX-TY-S5b"/>
                             <constraint firstAttribute="bottom" secondItem="Fpn-Iu-nG7" secondAttribute="bottom" id="Scz-mH-f35"/>
-                            <constraint firstItem="Fpn-Iu-nG7" firstAttribute="top" secondItem="EX7-Qx-eiP" secondAttribute="bottom" constant="-49" id="Uba-vL-0xB"/>
+                            <constraint firstItem="Fpn-Iu-nG7" firstAttribute="top" secondItem="EX7-Qx-eiP" secondAttribute="bottom" constant="-20" id="Uba-vL-0xB"/>
                             <constraint firstItem="Fpn-Iu-nG7" firstAttribute="leading" secondItem="UvR-Km-MDh" secondAttribute="leading" id="cxk-LM-sGK"/>
                             <constraint firstItem="EX7-Qx-eiP" firstAttribute="top" secondItem="UvR-Km-MDh" secondAttribute="top" id="yR8-6e-XGH"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="collectionView" destination="EX7-Qx-eiP" id="GlU-vX-lEE"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="DX3-Pb-LnQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

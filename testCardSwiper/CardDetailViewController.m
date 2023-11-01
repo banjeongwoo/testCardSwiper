@@ -22,7 +22,7 @@
     // Do any additional setup after loading the view.
     //self.view.layer.zPosition = 100000;
     
-    CGFloat w = [[UIScreen mainScreen] bounds].size.width;
+    //CGFloat w = [[UIScreen mainScreen] bounds].size.width;
 
 //    UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
 //    layout.scrollDirection = UICollectionViewScrollDirectionVertical;
@@ -80,88 +80,40 @@
            
         } completion:^(BOOL finished) {
             if(finished){
+                
+                CGFloat maxContentOffset =  self.collectionView.contentSize.height - self.collectionView.bounds.size.height + self.collectionView.contentInset.bottom;
+                
+                //[self.collectionView setContentOffset:CGPointMake(0, maxContentOffset)];
                 NSIndexPath *indexPath = [NSIndexPath indexPathForItem:self.dataList.count-1 inSection:0];
                 [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
-                
+               
     //            [self.collectionView setContentOffset:CGPointMake(0, CGFLOAT_MAX)];
     //            [self.collectionView layoutIfNeeded];
     //            [self.collectionView setNeedsLayout];
+                
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(600 * NSEC_PER_MSEC)), dispatch_get_main_queue(), ^{
+//                    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:self.dataList.count-1 inSection:0];
+//                    [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
+                    
+                });
             }
             
         }];
     });
-    
-   
-    
-    
-   
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1000 * NSEC_PER_MSEC)), dispatch_get_main_queue(), ^{
-//
-//      //  NSIndexPath *indexPath = [NSIndexPath indexPathForItem:self.dataList.count-1 inSection:0];
-//      //  [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionBottom animated:YES];
-//
-//       // [self.collectionView setContentOffset:CGPointMake(0, CGFLOAT_MAX)];
-//    });
-//
-
-    
-//    func scrollToLastItem(at scrollPosition: UICollectionViewScrollPosition = .centeredHorizontally, animated: Bool = true) {
-//           let lastSection = numberOfSections - 1
-//           guard lastSection >= 0 else { return }
-//           let lastItem = numberOfItems(inSection: lastSection) - 1
-//           guard lastItem >= 0 else { return }
-//           let lastItemIndexPath = IndexPath(item: lastItem, section: lastSection)
-//           scrollToItem(at: lastItemIndexPath, at: scrollPosition, animated: animated)
-//       }
-      
-    
-    
-//    CGSize contentSize = [self.collectionView.collectionViewLayout collectionViewContentSize];
-//    if (contentSize.height > self.collectionView.bounds.size.height) {
-//        CGPoint targetContentOffset = CGPointMake(0.0f, contentSize.height - self.collectionView.bounds.size.height);
-//        [self.collectionView setContentOffset:targetContentOffset];
-//    }
-    
-//    CGSize contentSize = [self.collectionView.collectionViewLayout collectionViewContentSize];
-//        if (contentSize.height > self.collectionView.bounds.size.height) {
-//            CGPoint targetContentOffset = CGPointMake(0.0f, contentSize.height - self.collectionView.bounds.size.height);
-//            [self.collectionView setContentOffset:targetContentOffset];
-//        }
 }
 
 - (void)viewWillLayoutSubviews {
-//    CGFloat width = UIScreen.mainScreen.bounds.size.width;
-//    //CGSize itemSize = CGSizeMake(width-60, 185*(width/360));
     CGFloat h = self.collectionView.frame.size.height;
-    if((150-20)*_dataList.count < h){
-        CGFloat top = (150-20)*_dataList.count - 49;
+    UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout*)_collectionView.collectionViewLayout;
+    CGFloat cellOffset = (layout.itemSize.height - layout.minimumLineSpacing);
+    
+    if(cellOffset*_dataList.count < h){
+        CGFloat top = h - cellOffset*_dataList.count + layout.minimumLineSpacing;
         self.collectionView.contentInset = UIEdgeInsetsMake(top,0,0,0);
     }
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-
-    // ---- autolayout ----
-    [self.view layoutIfNeeded];
-
-//    CGSize contentSize = [self.collectionView.collectionViewLayout collectionViewContentSize];
-//    if (contentSize.height > self.collectionView.bounds.size.height) {
-//        CGPoint targetContentOffset = CGPointMake(0.0f, contentSize.height - self.collectionView.bounds.size.height);
-//        [self.collectionView setContentOffset:targetContentOffset];
-//    }
     
-//    CGSize contentSize = [self.collectionView.collectionViewLayout collectionViewContentSize];
-//       if (contentSize.height > self.collectionView.bounds.size.height) {
-//           CGPoint targetContentOffset = CGPointMake(0.0f, contentSize.height - self.collectionView.bounds.size.height);
-//           [self.collectionView setContentOffset:targetContentOffset];
-//       }
-    
-//    CGFloat diff = self.collectionView.frame.size.height - self.collectionView.contentSize.height;
-//    if (diff > 0) {
-//        self.collectionView.contentInset = UIEdgeInsetsMake(diff, 0, 0, 0);
-//    }
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:self.dataList.count-1 inSection:0];
+    [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
 }
 
 - (IBAction)buttonUpInside:(id)sender {
@@ -189,16 +141,10 @@
     }else if(indexPath.item%5 == 4){
         cell.contentView.backgroundColor = [UIColor orangeColor];
     }else {
-        //view.backgroundColor = [UIColor greenColor];
-       // cell.contentView.backgroundColor = [UIColor rgbColorWithRed:index%255) green:<#(float)#> blue:<#(float)#> alpha:<#(float)#>]
-        
-        [UIColor colorWithRed:((float) (arc4random_uniform((uint32_t)index)%255) / 255.0f)
-                                                       green:((float) (arc4random_uniform((uint32_t)index)%255) / 255.0f)
-                                                        blue:((float) (arc4random_uniform((uint32_t)index)%255) / 255.0f)
-                                               alpha:1];
+        cell.contentView.backgroundColor = [UIColor orangeColor];
     }
     
-    cell.contentView.layer.cornerRadius = 28;
+    cell.contentView.layer.cornerRadius = 8;
     cell.contentView.layer.masksToBounds = true;
     cell.titleLabel.text = [NSString stringWithFormat:@"%lu", indexPath.item];
     return cell;
@@ -256,7 +202,7 @@
 - (instancetype)initWithCoder:(NSCoder *)coder {
     self = [super initWithCoder:coder];
     if (self) {
-
+        _prePos = 0;
     }
     return self;
 }
@@ -264,7 +210,7 @@
 - (void)prepareLayout {
     [super prepareLayout];
     _startIdx = -1;
-    _prePos = 0;
+    //_prePos = 0;
     
    // _lastPos = 0;
     
@@ -278,7 +224,7 @@
     CGFloat width = UIScreen.mainScreen.bounds.size.width;
     self.itemSize = CGSizeMake(width-60, 150);
     
-    NSInteger numberOfItems = [self.collectionView numberOfItemsInSection:0];
+   // NSInteger numberOfItems = [self.collectionView numberOfItemsInSection:0];
     
     
 //        if(itemSize.height*_dataList.count < _collectionView.bounds.size.height){
@@ -308,46 +254,58 @@
    // CGFloat width = UIScreen.mainScreen.bounds.size.width;
     
 //    NSInteger topVisibleCardIndex = (int)fabs(self.collectionView.contentOffset.y)/(_featuredHeight-50);
-    
-     
 //    NSLog(@"jwban featuredItemIndex %lu nextItemPercentageOffset: %lu", featuredItemIndex,lastVisibleCardIndex);
     NSLog(@"jwban layoutAttributesForElementsInRect !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     
 
     CGFloat contentOffset = self.collectionView.contentOffset.y;
     CGFloat maxContentOffset =  self.collectionView.contentSize.height - self.collectionView.bounds.size.height + self.collectionView.contentInset.bottom;
-    NSInteger lastVisibleCardIndex = (int) (fabs(self.collectionView.contentOffset.y)+self.collectionView.bounds.size.height)/(self.itemSize.height-self.minimumLineSpacing);
+    NSInteger lastVisibleCardIndex = (NSInteger) (fabs(self.collectionView.contentOffset.y)+self.collectionView.bounds.size.height)/(self.itemSize.height-self.minimumLineSpacing);
   
-    if(contentOffset == 0){
-        lastVisibleCardIndex = 0;
-    }
+//    if(contentOffset == 0){
+//        lastVisibleCardIndex = 0;
+//    }
     
     CGFloat offsetDiff = maxContentOffset - contentOffset;
-        
-    CGFloat itemY = (self.itemSize.height-self.minimumLineSpacing)*lastVisibleCardIndex + self.collectionView.bounds.size.height;
     
-   CGFloat normalizedCenter = ((maxContentOffset - contentOffset)/((self.itemSize.height-self.minimumLineSpacing)*lastVisibleCardIndex))*300.0f;
+    if(_preOffset != 0){
+        offsetDiff = _preOffset - contentOffset;
+       // NSLog(@"xxx=======>>>>> %f %f %f" , _preOffset , contentOffset, offsetDiff);
+    }
+        
+   // CGFloat itemY = (self.itemSize.height-self.minimumLineSpacing)*lastVisibleCardIndex + self.collectionView.bounds.size.height;
+    
+    CGFloat normalizedCenter = offsetDiff;
+    
+    //((maxContentOffset - contentOffset)/((self.itemSize.height-self.minimumLineSpacing)*lastVisibleCardIndex))*300.0f;
     if(contentOffset == 0){
-        normalizedCenter = 30;
+       // normalizedCenter = 30;
     }
     
-    NSLog(@"lastVisibleCardIndex %lu  -- %f %f",lastVisibleCardIndex, normalizedCenter, itemY);
+    if(lastVisibleCardIndex != 0 && _prePos != lastVisibleCardIndex){
+        _preOffset = contentOffset;
+        NSLog(@"lastVisibleCardIndex change item %lu pre %lu _preOffset : %f", lastVisibleCardIndex, _prePos, _preOffset);
+        _prePos = lastVisibleCardIndex;
+    }
+    
+    if(lastVisibleCardIndex == 0){
+        NSLog(@"lastVisibleCardIndex");
+    }
+    
+    NSLog(@"lastVisibleCardIndex %lu  -- %f",lastVisibleCardIndex, normalizedCenter);
   
    // NSLog(@"clastVisibleCardIndex %f t %lu b %lu c %f",contentOffset, topVisibleCardIndex, lastVisibleCardIndex, normalizedCenter);
-
         
     for (UICollectionViewLayoutAttributes *attribute in attributes) {
         //CGRect frame = attribute.frame;
         attribute.zIndex = attribute.indexPath.item;
         
-        if (offsetDiff != 0 && attribute.indexPath.item >= lastVisibleCardIndex && normalizedCenter > 0){
-           // CGFloat y = fabs(self.collectionView.contentOffset.y) - (self.itemSize.height * attributes.indexPath.item);
-            NSLog(@"normalizedCenter %f", normalizedCenter);
-            
-            CGFloat y = MAX(-normalizedCenter, -30);
-            
+        if(maxContentOffset == contentOffset){
+            attribute.transform = CGAffineTransformIdentity;
+        }else if (offsetDiff != 0 && attribute.indexPath.item >= lastVisibleCardIndex && normalizedCenter > 0){
+            CGFloat y = MAX(-normalizedCenter, -20);
             y = y*(attribute.indexPath.item-lastVisibleCardIndex);
-            
+            NSLog(@"===== normalizedCenter %f", y);
             attribute.transform = CGAffineTransformMakeTranslation(0, y);
         }else {
             attribute.transform = CGAffineTransformIdentity;
@@ -375,16 +333,19 @@
 
 @end
 
-@interface CardViewCell()
 
+
+@interface CardViewCell()
 
 @end
 
 @implementation CardViewCell
 
-
-
 @end
+
+
+
+
 
 
 
