@@ -303,7 +303,7 @@
 
   //  CGFloat nextItemPercentageOffset = (self.collectionView.contentOffset.y / _dragOffset) - (CGFloat)featuredItemIndex;
     
-    CGFloat y = 0;
+//    CGFloat y = 0;
     
    // CGFloat width = UIScreen.mainScreen.bounds.size.width;
     
@@ -318,20 +318,26 @@
     CGFloat maxContentOffset =  self.collectionView.contentSize.height - self.collectionView.bounds.size.height + self.collectionView.contentInset.bottom;
     NSInteger lastVisibleCardIndex = (int) (fabs(self.collectionView.contentOffset.y)+self.collectionView.bounds.size.height)/(self.itemSize.height-self.minimumLineSpacing);
   
+    if(contentOffset == 0){
+        lastVisibleCardIndex = 0;
+    }
     
     CGFloat offsetDiff = maxContentOffset - contentOffset;
         
     CGFloat itemY = (self.itemSize.height-self.minimumLineSpacing)*lastVisibleCardIndex + self.collectionView.bounds.size.height;
     
    CGFloat normalizedCenter = ((maxContentOffset - contentOffset)/((self.itemSize.height-self.minimumLineSpacing)*lastVisibleCardIndex))*300.0f;
+    if(contentOffset == 0){
+        normalizedCenter = 30;
+    }
     
-    NSLog(@"lastVisibleCardIndex %lu  -- %f",lastVisibleCardIndex, normalizedCenter);
+    NSLog(@"lastVisibleCardIndex %lu  -- %f %f",lastVisibleCardIndex, normalizedCenter, itemY);
   
    // NSLog(@"clastVisibleCardIndex %f t %lu b %lu c %f",contentOffset, topVisibleCardIndex, lastVisibleCardIndex, normalizedCenter);
 
         
     for (UICollectionViewLayoutAttributes *attribute in attributes) {
-        CGRect frame = attribute.frame;
+        //CGRect frame = attribute.frame;
         attribute.zIndex = attribute.indexPath.item;
         
         if (offsetDiff != 0 && attribute.indexPath.item >= lastVisibleCardIndex && normalizedCenter > 0){
@@ -340,8 +346,7 @@
             
             CGFloat y = MAX(-normalizedCenter, -30);
             
-            y = y*(attribute.indexPath.item  - lastVisibleCardIndex);
-            
+            y = y*(attribute.indexPath.item-lastVisibleCardIndex);
             
             attribute.transform = CGAffineTransformMakeTranslation(0, y);
         }else {
@@ -903,4 +908,3 @@
 //
 //
 //@end
-
