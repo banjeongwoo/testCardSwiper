@@ -295,11 +295,16 @@
   
     _ltemOffset = 100;
     CGFloat itmeHeight = _ltemOffset;
+https://github.com/JoniVR/VerticalCardSwiper/blob/main/Sources/VerticalCardSwiperFlowLayout.swift
+https://github.com/gleue/TGLStackedViewController/blob/master/TGLStackedViewController/TGLStackedLayout.m
     CGFloat delta = MIN(((contentOffset-curItemPos*itemRange)/itemRange)*itmeHeight, itmeHeight);
-    
+  //  delta = ((contentOffset-curItemPos*itemRange)/itemRange)*itmeHeight;
     NSMutableArray *layoutAttributes = [NSMutableArray new];
     for(int i=0; i < numberOfItem; i++){
         NSIndexPath* indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+        
+        //UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
+        
         UICollectionViewLayoutAttributes *attributes = [self layoutAttributesForItemAtIndexPath:indexPath];
         [self updateCellAttributes:attributes curItemPos:curItemPos];
         
@@ -315,7 +320,7 @@
     }
     
     if(curItemPos > 3) { // 4장이상인경우 하나씩 지워 저야한다.
-        CGFloat y = 0;
+        CGFloat prey = 0;
         for(UICollectionViewLayoutAttributes *attributes in layoutAttributes){
             CGPoint origin = attributes.frame.origin;
             
@@ -325,10 +330,10 @@
 //            }else{
 //                origin.y = (y-self.minimumLineSpacing);
 //            }
-            origin.y -= (itmeHeight*(curItemPos-4) + delta);
+            origin.y -= (itmeHeight*(curItemPos-3) + delta);
             
             if(attributes.indexPath.item > 3){
-                origin.y -= itmeHeight;
+             //  origin.y -= itmeHeight;
             }
             
             //NSLog(@"cur %lu _ %f",attributes.indexPath.item,  origin.y);
@@ -336,7 +341,10 @@
             
            // y = CGRectGetMaxY(attributes.frame);
             
-            NSLog(@"%lu ---->>>>>> %@", attributes.indexPath.item, NSStringFromCGRect( attributes.frame ));
+            
+            NSLog(@"%lu ---->>>>>> %@ %f", attributes.indexPath.item, NSStringFromCGRect(attributes.frame), prey -  origin.y );
+            
+            prey =  origin.y ;
         }
     }
     
@@ -448,7 +456,7 @@
 
     if(curItemPos > 0 && contentOffset >= self.ltemOffset){
        // NSLog(@"%lu", attributes.indexPath.row);
-       finalY += (attributes.indexPath.row*self.ltemOffset);
+     //  finalY += (attributes.indexPath.row*self.ltemOffset);
         //finalY += (attributes.indexPath.row*self.ltemOffset - delta);
     }
 
