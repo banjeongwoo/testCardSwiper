@@ -9,6 +9,13 @@
 
 @interface ViewController : UIViewController
 
-
+-(void) update:(NSInteger) idx;
 @end
 
+@interface LPayMiddleBannerCollectionViewLayout : UICollectionViewFlowLayout
+@property (nonatomic, assign) CGFloat currentPage;
+@end
+
+@interface LPayMiddleBannerCell : UICollectionViewCell
+
+@end
