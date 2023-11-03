@@ -69,7 +69,7 @@
     
     LPayMiddleBannerCollectionViewLayout *layout = [LPayMiddleBannerCollectionViewLayout new];
     layout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
-    layout.sectionInset = UIEdgeInsetsMake(0, 40, 0, 0);
+    layout.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
     layout.minimumLineSpacing = 12;
     layout.minimumInteritemSpacing = 0;
     layout.itemSize = CGSizeMake(80, 80);
@@ -79,11 +79,11 @@
     
     NSInteger cnt = _dataList.count;
  
-    CGFloat updatedOffset = ((layout.itemSize.width + layout.minimumLineSpacing) * cnt);
-    [self.collectionView setContentOffset:CGPointMake(updatedOffset-40, 0)];
-    layout.currentPage = cnt;
-    
     [_collectionView reloadData];
+    
+//    CGFloat updatedOffset = ((layout.itemSize.width + layout.minimumLineSpacing) * cnt) -  (40 + layout.minimumLineSpacing);
+//    [self.collectionView setContentOffset:CGPointMake(updatedOffset, 0)];
+//    layout.currentPage = cnt;
     
     //[_swipeCardView setCurrnetPositonIndex:1];
 }
@@ -266,21 +266,21 @@
     }
   
     
-    [_layoutAttributes removeAllObjects];
-    
-    NSInteger numberOfItem = (NSInteger)[self.collectionView numberOfItemsInSection:0];
-    
-    CGFloat collectionCenter = self.collectionView.frame.size.width/2;
-    
-    for(int i=0; i < numberOfItem; i++){
-        NSIndexPath* indexPath = [NSIndexPath indexPathForRow:i inSection:0];
-        UICollectionViewLayoutAttributes *attributes = [self layoutAttributesForItemAtIndexPath:indexPath];
-        
-        CGFloat center = collectionCenter - self.itemSize.width/2 + self.itemSize.width*i + self.spaceing;
-        attributes.frame = CGRectMake(center, 0, self.itemSize.width, self.itemSize.height);
-        
-        [_layoutAttributes addObject:attributes];
-    }
+//    [_layoutAttributes removeAllObjects];
+//
+//    NSInteger numberOfItem = (NSInteger)[self.collectionView numberOfItemsInSection:0];
+//
+//    CGFloat collectionCenter = self.collectionView.frame.size.width/2;
+//
+//    for(int i=0; i < numberOfItem; i++){
+//        NSIndexPath* indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+//        UICollectionViewLayoutAttributes *attributes = [self layoutAttributesForItemAtIndexPath:indexPath];
+//
+//        CGFloat center = collectionCenter - self.itemSize.width/2 + self.itemSize.width*i + self.spaceing;
+//        attributes.frame = CGRectMake(center, 0, self.itemSize.width, self.itemSize.height);
+//
+//        [_layoutAttributes addObject:attributes];
+//    }
     
 }
 
@@ -290,7 +290,7 @@
     //CGFloat width = UIScreen.mainScreen.bounds.size.width;
     self.itemSize = CGSizeMake(80, 80);
     self.spaceing = 12;
-    self.sideItemScale = 0.5f;
+    self.sideItemScale = 1.0f;
     self.sideItemAlpha = 1.0f;
     
 
@@ -298,14 +298,22 @@
 //
     //self.sectionInset = UIEdgeInsetsMake(0, 80, 0, 0);
     //self.minimumLineSpacing = self.spaceing;
-    self.minimumLineSpacing = self.spaceing - (80-(80*self.sideItemScale))/2.0;
+    self.minimumLineSpacing = self.spaceing;// - (80-(80*self.sideItemScale))/2.0;
+    
+//    CGFloat itemWidth = self.itemSize.width;
+//    CGFloat scaleItemOffset = (itemWidth - itemWidth*self.sideItemScale)/2.0;
+//    self.minimumLineSpacing = self.spaceing - scaleItemOffset;
+//
+    NSLog(@"%f",  self.minimumLineSpacing);
+    
+    //self.minimumLineSpacing = self.spaceing;
     self.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
     self.minimumInteritemSpacing = 0;
   
     
     
     
-   // [self.collectionView setContentOffset:CGPointMake(collectionCenter, 0)];
+    [self.collectionView setContentOffset:CGPointMake(0, 0)];
 }
 
 - (NSArray<__kindof UICollectionViewLayoutAttributes *> *)layoutAttributesForElementsInRect:(CGRect)rect {
@@ -330,7 +338,14 @@
     for (UICollectionViewLayoutAttributes *attribute in attributes) {
         CGRect frame = attribute.frame;
         frame.origin.y = 0;
+//        if(self.collectionView.contentOffset.x == 0)
+//            frame.origin.x -= (self.itemSize.width );
+//        else
+//            frame.origin.x += self.itemSize.width/2;
+       // frame.origin.x += self.itemSize.width/2;
         //frame.origin.x += self.collectionView.contentOffset.x + self.minimumLineSpacing;
+        
+        //frame.origin.x += self.itemSize.width/2;
         attribute.frame = frame;
         
         if (CGRectIntersectsRect(attribute.frame, rect)) {
@@ -341,8 +356,8 @@
             CGFloat ratio = (maxDistance - distance)/maxDistance;
 
             CGFloat scale = ratio * (1 - self.sideItemScale) + self.sideItemScale;
-                    
-         
+            
+            
             CGAffineTransform transform = CGAffineTransformScale(CGAffineTransformIdentity, scale, scale);
             attribute.transform = transform;
         }
@@ -373,9 +388,23 @@
         _currentPage = MIN(_currentPage + 1, itemsCount - 1);
     }
     
-    CGFloat updatedOffset = ((self.itemSize.width + self.minimumLineSpacing) * _currentPage);
-    _previousOffset = updatedOffset;
+    NSLog(@"%f %f %f", self.minimumLineSpacing, self.itemSize.width, _currentPage);
     
+    CGFloat width = self.collectionView.bounds.size.width;
+    
+    //CGFloat updatedOffset = (( self.itemSize.width - self.minimumLineSpacing) * _currentPage) + self.itemSize.width/2;// + self.minimumLineSpacing;
+   
+    //CGFloat updatedOffset = ((self.itemSize.width - self.minimumLineSpacing) * _currentPage) + self.itemSize.width/2 + self.minimumLineSpacing;// + self.itemSize.width/2 + self.minimumLineSpacing;
+    //CGFloat updatedOffset = ((self.itemSize.width + self.minimumLineSpacing) * _currentPage) + self.itemSize.width/2 - self.minimumLineSpacing;
+    //CGFloat updatedOffset = ((self.itemSize.width + self.minimumLineSpacing) * _currentPage) + self.minimumLineSpacing + 22;//self.minimumLineSpacing;;
+    
+    CGFloat updatedOffset = ((self.itemSize.width + self.minimumLineSpacing) * _currentPage) +  31 + self.minimumLineSpacing;
+//    CGRect visibleRect;
+//    visibleRect.origin = self.collectionView.contentOffset;
+//    visibleRect.size = self.collectionView.bounds.size;
+//    updatedOffset = visibleRect.origin.x +  visibleRect.size.width/2;
+    
+    _previousOffset = updatedOffset;
     CGPoint updatedPoint = CGPointMake(updatedOffset, proposedContentOffset.y);
     
     return updatedPoint;
