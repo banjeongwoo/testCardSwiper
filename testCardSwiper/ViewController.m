@@ -11,7 +11,7 @@
 #import "PayRcmdCardView.h"
 #import "CardDetailViewController.h"
 
-#define USE_MAX_COUNT      1000
+#define USE_MAX_COUNT      1 //1000
 
 @interface ViewController () <SwipeCardsDataSource>
 @property(strong, nonatomic) SwipeCardView *swipeCardView;
@@ -234,6 +234,8 @@
 @property (nonatomic, assign) CGFloat previousOffset;
 
 @property (nonatomic, strong) NSMutableArray *layoutAttributes;
+
+@property (nonatomic, assign) CGFloat centerOffset;
 @end
 
 @implementation LPayMiddleBannerCollectionViewLayout
@@ -262,26 +264,25 @@
     if(!self.isSetup){
         [self setupLayout];
         self.isSetup = YES;
-        
     }
-  
     
-//    [_layoutAttributes removeAllObjects];
-//
-//    NSInteger numberOfItem = (NSInteger)[self.collectionView numberOfItemsInSection:0];
-//
-//    CGFloat collectionCenter = self.collectionView.frame.size.width/2;
-//
-//    for(int i=0; i < numberOfItem; i++){
-//        NSIndexPath* indexPath = [NSIndexPath indexPathForRow:i inSection:0];
-//        UICollectionViewLayoutAttributes *attributes = [self layoutAttributesForItemAtIndexPath:indexPath];
-//
-//        CGFloat center = collectionCenter - self.itemSize.width/2 + self.itemSize.width*i + self.spaceing;
-//        attributes.frame = CGRectMake(center, 0, self.itemSize.width, self.itemSize.height);
-//
-//        [_layoutAttributes addObject:attributes];
-//    }
+    CGFloat offset = 0;
+    CGFloat width = self.collectionView.bounds.size.width;
+    NSInteger numberOfItem = (NSInteger)[self.collectionView numberOfItemsInSection:0];
+    for(int i = 0; i < numberOfItem; i++){
+        if(width < i*(self.itemSize.width+self.minimumLineSpacing)){
+            offset = (i-1)*(self.itemSize.width+self.minimumLineSpacing);
+            
+            offset = ceil(width - offset)/2.0f + (self.itemSize.width/2.0f+self.minimumLineSpacing);
+            //offset = offset - (self.itemSize.width + self.minimumLineSpacing);
+            
+            offset = offset - (self.itemSize.width + self.minimumLineSpacing)*self.sideItemScale;
+            offset = offset + (self.itemSize.width + self.minimumLineSpacing)*2; // 0을 중간으로
+            break;
+        }
+    }
     
+    _centerOffset = offset;
 }
 
 - (void) setupLayout {
@@ -310,27 +311,36 @@
     CGFloat collectionCenter = self.collectionView.frame.size.width/2;
     CGFloat contentOffset = self.collectionView.contentOffset.x;
 
-    
-    CGFloat offset = 0;
-    CGFloat width = self.collectionView.bounds.size.width;
-    NSInteger numberOfItem = (NSInteger)[self.collectionView numberOfItemsInSection:0];
-    for(int i = 0; i < numberOfItem; i++){
-        if(width < i*(self.itemSize.width+self.minimumLineSpacing)){
-            offset = (i-1)*(self.itemSize.width+self.minimumLineSpacing);
-            
-            offset = ceil(width - offset)/2.0f + (self.itemSize.width/2.0f+self.minimumLineSpacing);
-            //offset = offset - (self.itemSize.width + self.minimumLineSpacing);
-            
-            offset = offset - (self.itemSize.width + self.minimumLineSpacing)*self.sideItemScale;
-            break;
-        }
-    }
+//    CGFloat offset = 0;
+//    CGFloat width = self.collectionView.bounds.size.width;
+//    NSInteger numberOfItem = (NSInteger)[self.collectionView numberOfItemsInSection:0];
+//    for(int i = 0; i < numberOfItem; i++){
+//        if(width < i*(self.itemSize.width+self.minimumLineSpacing)){
+//            offset = (i-1)*(self.itemSize.width+self.minimumLineSpacing);
+//
+//            offset = ceil(width - offset)/2.0f + (self.itemSize.width/2.0f+self.minimumLineSpacing);
+//            //offset = offset - (self.itemSize.width + self.minimumLineSpacing);
+//
+//            offset = offset - (self.itemSize.width + self.minimumLineSpacing)*self.sideItemScale;
+//            offset = offset + (self.itemSize.width + self.minimumLineSpacing)*2; // 0을 중간으로
+//            break;
+//        }
+//    }
     
     for (UICollectionViewLayoutAttributes *attribute in attributes) {
         CGRect frame = attribute.frame;
         frame.origin.y = 0;
-
-        frame.origin.x += offset;
+        
+//        if(attribute.indexPath.item < _currentPage+2){
+//            frame.origin.x += offset - self.minimumLineSpacing;
+//        }else if(attribute.indexPath.item > _currentPage+3){
+//            frame.origin.x += offset + self.minimumLineSpacing;
+//        }else{
+//            frame.origin.x += offset;
+//        }
+        
+        frame.origin.x += _centerOffset;
+        
         attribute.frame = frame;
         
         if (CGRectIntersectsRect(attribute.frame, rect)) {
@@ -342,7 +352,6 @@
 
             CGFloat scale = ratio * (1 - self.sideItemScale) + self.sideItemScale;
             
-            
             CGAffineTransform transform = CGAffineTransformScale(CGAffineTransformIdentity, scale, scale);
             attribute.transform = transform;
         }
@@ -351,13 +360,14 @@
     return attributes;
 }
 
-//- (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath {
-//    return  _layoutAttributes[indexPath.item];
-//}
+//setCollectionViewContentSize
+- (CGSize)collectionViewContentSize {
+    NSInteger numberOfItem = (NSInteger)[self.collectionView numberOfItemsInSection:0];
+   
+    CGFloat collectionViewWidth = (numberOfItem+3)*(self.itemSize.width + self.minimumLineSpacing) + _centerOffset;
 
-- (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds {
-    return YES;
-}
+   return CGSizeMake(collectionViewWidth, 80);
+ }
 
 - (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset withScrollingVelocity:(CGPoint)velocity {
     if (CGPointEqualToPoint(velocity, CGPointZero)){
@@ -381,5 +391,7 @@
     return updatedPoint;
 }
 
-
+- (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds {
+    return YES;
+}
 @end
