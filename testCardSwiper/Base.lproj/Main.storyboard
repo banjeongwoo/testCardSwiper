@@ -25,7 +25,7 @@
                                     <constraint firstAttribute="width" constant="272" id="zus-xo-2rH"/>
                                 </constraints>
                             </imageView>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="amu-ZY-fjI">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="amu-ZY-fjI">
                                 <rect key="frame" x="0.0" y="359" width="393" height="80"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
@@ -44,6 +44,30 @@
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="7ZL-xa-hAM">
                                             <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="szw-Ck-SvQ">
+                                                    <rect key="frame" x="63" y="-201" width="1" height="529"/>
+                                                    <color key="backgroundColor" systemColor="tintColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="40" id="Uct-TH-UvJ"/>
+                                                        <constraint firstAttribute="height" constant="40" id="pUb-Po-Lbp"/>
+                                                    </constraints>
+                                                </view>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J0O-E7-9pt">
+                                                    <rect key="frame" x="63" y="-201" width="1" height="529"/>
+                                                    <color key="backgroundColor" systemColor="systemGreenColor"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="40" id="qe3-da-936"/>
+                                                        <constraint firstAttribute="width" constant="40" id="t8Y-Ry-Suj"/>
+                                                    </constraints>
+                                                </view>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="J0O-E7-9pt" secondAttribute="trailing" id="Syf-qt-Prw"/>
+                                                <constraint firstItem="szw-Ck-SvQ" firstAttribute="leading" secondItem="7ZL-xa-hAM" secondAttribute="leading" id="Xy9-wC-wg4"/>
+                                                <constraint firstItem="szw-Ck-SvQ" firstAttribute="top" secondItem="7ZL-xa-hAM" secondAttribute="top" id="emb-Qe-t9H"/>
+                                                <constraint firstAttribute="bottom" secondItem="J0O-E7-9pt" secondAttribute="bottom" id="rpU-e6-rzT"/>
+                                            </constraints>
                                         </collectionViewCellContentView>
                                     </collectionViewCell>
                                 </cells>
@@ -224,8 +248,14 @@
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemOrangeColor">
             <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="tintColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
