@@ -196,12 +196,18 @@
 //}
 
 @end
-@interface StickCollectionViewFlowLayout()
-@property (nonatomic, assign) CGFloat prePosY;
-@property(nonatomic)CGFloat lastContentOffsetY;
 
-@property(nonatomic)NSInteger seqIndex;
-@property(nonatomic)CGFloat ltemOffset;
+@interface StickCollectionViewFlowLayout()
+//@property (nonatomic, assign) CGFloat prePosY;
+//@property(nonatomic)CGFloat lastContentOffsetY;
+//
+//@property(nonatomic)NSInteger seqIndex;
+
+@property(nonatomic, assign)CGFloat ltemOffset;
+@property(nonatomic, assign)NSInteger numberOfItem;
+@property(nonatomic, assign)CGFloat maxContentOffset;
+@property(nonatomic, assign)NSInteger itemRange;
+@property(nonatomic, assign)CGFloat contentHeight;
 
 @property(nonatomic) BOOL isSetup;
 @property(nonatomic,strong) NSMutableArray *layoutAttributes;
@@ -212,17 +218,27 @@
 - (instancetype)initWithCoder:(NSCoder *)coder {
     self = [super initWithCoder:coder];
     if (self) {
-        _lastContentOffsetY = 0;
-        _seqIndex = 0;
+      
         
-        _ltemOffset = 50;
+        _ltemOffset = 100;
         _layoutAttributes = nil;
+        //_contentHeigth
     }
     return self;
 }
 
 - (void)prepareLayout {
     [super prepareLayout];
+    
+    if(!self.isSetup){
+        CGSize contentSize = [self collectionViewContentSize];
+        
+        _maxContentOffset = contentSize.height - self.collectionView.bounds.size.height + self.collectionView.contentInset.bottom; // 전체 스크롤 오프셋
+        
+        _numberOfItem = (NSInteger)[self.collectionView numberOfItemsInSection:0];
+        _itemRange = _maxContentOffset/_numberOfItem; // 카드 한장 이동 할 수 있는 거리
+        _contentHeight = _maxContentOffset + self.collectionView.bounds.size.height;
+    }
     
     
 //    if(!self.isSetup){
@@ -242,13 +258,19 @@
     //NSLog(@"====>>>>>> prepareLayout");
 }
 
+
+//- (CGSize)collectionViewContentSize {
+//    CGFloat width = UIScreen.mainScreen.bounds.size.width;
+//    return CGSizeMake(width-60, _contentHeight);
+//}
+
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect {
-    NSArray *oldItems = [super layoutAttributesForElementsInRect:rect];
-    NSMutableArray *allItems = [[NSMutableArray alloc]initWithArray:oldItems copyItems:YES];
+//    NSArray *oldItems = [super layoutAttributesForElementsInRect:rect];
+//    NSMutableArray *allItems = [[NSMutableArray alloc]initWithArray:oldItems copyItems:YES];
     
-    NSInteger startidx = -1;
+  //  NSInteger startidx = -1;
   //  NSLog(@"layoutAttributesForElementsInRect start");
-    _prePosY = 0.0f;
+ //   _prePosY = 0.0f;
    // NSLog(@"scroll diff : %f", self.collectionView.contentOffset.y - _lastContentOffsetY);
     
     //    NSInteger topVisibleCardIndex = (int)fabs(self.collectionView.contentOffset.y)/self.itemSize.height;
@@ -280,74 +302,159 @@
 //        }
 //    }
     
-    //NSLog(@"%f %f %f",  self.collectionView.contentSize.height, self.collectionView.bounds.size.height, self.collectionView.contentInset.bottom);
-    CGSize contentSize = [self collectionViewContentSize];
+//    _maxContentOffset = contentSize.height - self.collectionView.bounds.size.height + self.collectionView.contentInset.bottom; // 전체 스크롤 오프셋
+//
+//    _numberOfItem = (NSInteger)[self.collectionView numberOfItemsInSection:0];
+//    _itemRange = _maxContentOffset/_numberOfItem; // 카드 한장 이동 할 수 있는 거리
     
-    CGFloat maxContentOffset = contentSize.height - self.collectionView.bounds.size.height + self.collectionView.contentInset.bottom; // 전체 스크롤 오프셋
+    _ltemOffset = 100;
+    //NSLog(@"%f %f %f",  self.collectionView.contentSize.height, self.collectionView.bounds.size.height, self.collectionView.contentInset.bottom);
+   // CGSize contentSize = [self collectionViewContentSize];
+    
+    //CGFloat maxContentOffset = contentSize.height - self.collectionView.bounds.size.height + self.collectionView.contentInset.bottom; // 전체 스크롤 오프셋
     
     NSInteger numberOfItem = (NSInteger)[self.collectionView numberOfItemsInSection:0];
-    CGFloat itemRange = maxContentOffset/numberOfItem; // 카드 한장 이동 할 수 있는 거리
+    //CGFloat itemRange = maxContentOffset/numberOfItem; // 카드 한장 이동 할 수 있는 거리
     
     CGFloat contentOffset = self.collectionView.contentOffset.y; // 현재 위치
      
-    NSInteger curItemPos = (NSInteger)contentOffset/itemRange; // 현자 아아템 포지션
+    //NSInteger curItemPos = (NSInteger)contentOffset/itemRange; // 현자 아아템 포지션
+    
+   // NSInteger curItemPos = (NSInteger)contentOffset/(_ltemOffset); //
+    NSInteger curItemPos = (NSInteger)contentOffset/(_itemRange);
+    
+    CGFloat width = [UIScreen mainScreen].bounds.size.width;
+    
+    CGFloat itemH = 185*(width/360) - 42; // cell 높이
   
-  
-    _ltemOffset = 100;
-    CGFloat itmeHeight = _ltemOffset;
-https://github.com/JoniVR/VerticalCardSwiper/blob/main/Sources/VerticalCardSwiperFlowLayout.swift
-https://github.com/gleue/TGLStackedViewController/blob/master/TGLStackedViewController/TGLStackedLayout.m
-    CGFloat delta = MIN(((contentOffset-curItemPos*itemRange)/itemRange)*itmeHeight, itmeHeight);
-  //  delta = ((contentOffset-curItemPos*itemRange)/itemRange)*itmeHeight;
+    CGFloat itemOffset = _ltemOffset;
+    CGFloat delta = MIN(((contentOffset-curItemPos*self.itemRange)/self.itemRange)*itemOffset, itemOffset);
+    
+    CGFloat minY = CGRectGetMinY(self.collectionView.bounds) + self.collectionView.contentInset.top;
+    
+   // NSLog(@"===>>> %lu  %f, %f minY %f", curItemPos, itemRange, contentOffset, minY);
+        
     NSMutableArray *layoutAttributes = [NSMutableArray new];
+    
+//    for(int i=0; i < numberOfItem; i++){
+//        NSIndexPath* indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+//        UICollectionViewLayoutAttributes *attributes = [self layoutAttributesForItemAtIndexPath:indexPath];
+//        [self updateCellAttributes:attributes curItemPos:curItemPos];
+//        [layoutAttributes addObject:attributes];
+//    }
+    
+    CGFloat y = minY - contentOffset;
+    
+    // 시작점
+    CGFloat uy = (contentOffset-curItemPos*self.itemRange);
+    
+    
+    CGFloat startY = minY;
+    
+    if(curItemPos > 0){
+       // y = minY + itemOffset*curItemPos - (contentOffset - minY) + delta;// + delta;
+        y = minY + itemOffset*curItemPos - uy;
+    }else {
+        y = minY - contentOffset;
+        startY = y;
+    }
+    
+    //
+    
+    NSLog(@"%lu uy: %f %f", curItemPos, uy, y);
+    
+    
+    //NSLog(@"%lu startY : %f y: %f xxx %f", curItemPos, startY, y, (contentOffset - minY));
+    
+    if(curItemPos > 3){
+        startY = minY - itemOffset*(curItemPos) - MIN(uy, _ltemOffset);
+       // startY = minY - itemOffset*(curItemPos-2);
+    }
+    
     for(int i=0; i < numberOfItem; i++){
         NSIndexPath* indexPath = [NSIndexPath indexPathForRow:i inSection:0];
-        
-        //UICollectionViewLayoutAttributes *attributes = [UICollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
-        
         UICollectionViewLayoutAttributes *attributes = [self layoutAttributesForItemAtIndexPath:indexPath];
-        [self updateCellAttributes:attributes curItemPos:curItemPos];
+        CGPoint origin = attributes.frame.origin;
         
-//        attributes.zIndex = attributes.indexPath.row;
-//        CGPoint origin = attributes.frame.origin;
-//        if(attributes.indexPath.row > 0 && curItemPos < 4){
-//            if(contentOffset > 0){
-//                origin.y = origin.y-delta;
-//            }
-//        }
+        if(attributes.indexPath.item <= curItemPos){
+            origin.y = startY + attributes.indexPath.item*itemOffset;
+            //origin.y = startY + attributes.indexPath.item*itemOffset;
+            //y = startY + attributes.indexPath.item*itemOffset;
+            y = origin.y+itemH;
+        }else{
+            origin.y = y;
+            y = origin.y+itemH;
+        }
+        
+        
+   
+        
+        attributes.zIndex = attributes.indexPath.row;
+        attributes.frame = (CGRect){origin, attributes.frame.size};
+
+        //  //   NSLog(@"%lu Y: %f", attributes.indexPath.row, origin.y);
         
         [layoutAttributes addObject:attributes];
     }
     
-    if(curItemPos > 3) { // 4장이상인경우 하나씩 지워 저야한다.
-        CGFloat prey = 0;
+    //_contentHeight = y + itemH-42;//(itemH-itemOffset);//(itemH-itemOffset)*1.5;
+    
+    
+    
+//    if(curItemPos > 3) { // 4장이상인경우 하나씩 지워 저야한다.
+//        CGFloat y = 0;
+        
+//        if(layoutAttributes.count > 0){
+//            UICollectionViewLayoutAttributes *attributes = layoutAttributes[0];
+//            CGPoint origin = attributes.frame.origin;
+//            origin.y -= (itmeHeight*(curItemPos-3) + delta);
+//
+//            y = origin.y;
+//
+//            for(UICollectionViewLayoutAttributes *attributes in layoutAttributes){
+//                CGPoint origin = attributes.frame.origin;
+//
+//
+//                origin.y = y;
+//
+//                attributes.frame = (CGRect){origin, attributes.frame.size};
+//
+//                y += attributes.frame.size.height - self.minimumLineSpacing;
+//
+//               // y = CGRectGetMaxY(attributes.frame);
+//
+//                NSLog(@"%lu ---->>>>>> %@", attributes.indexPath.item, NSStringFromCGRect( attributes.frame ));
+//            }
+//        }
+        
+        
+        /*
         for(UICollectionViewLayoutAttributes *attributes in layoutAttributes){
             CGPoint origin = attributes.frame.origin;
             
-//            if(y == 0){
-//                
-//                y = origin.y;
-//            }else{
-//                origin.y = (y-self.minimumLineSpacing);
-//            }
+            if(attributes.indexPath.item > 3){
+                origin.y -= (itmeHeight*(curItemPos-3) + delta) + 300;
+            }else{
+                
+            }
+
             origin.y -= (itmeHeight*(curItemPos-3) + delta);
             
-            if(attributes.indexPath.item > 3){
-             //  origin.y -= itmeHeight;
-            }
-            
+
+//            if(attributes.indexPath.item > 3){
+//                origin.y -= itmeHeight;
+//            }
+
             //NSLog(@"cur %lu _ %f",attributes.indexPath.item,  origin.y);
             attributes.frame = (CGRect){origin, attributes.frame.size};
-            
+
            // y = CGRectGetMaxY(attributes.frame);
+
+           // NSLog(@"%lu ---->>>>>> %@ diff %f", attributes.indexPath.item, NSStringFromCGRect( attributes.frame ), (y-origin.y));
             
-            
-            NSLog(@"%lu ---->>>>>> %@ %f", attributes.indexPath.item, NSStringFromCGRect(attributes.frame), prey -  origin.y );
-            
-            prey =  origin.y ;
-        }
-    }
-    
+            y = origin.y;
+        }*/
+ //   }
     
     
     return layoutAttributes;
@@ -454,9 +561,15 @@ https://github.com/gleue/TGLStackedViewController/blob/master/TGLStackedViewCont
 
     CGPoint origin = attributes.frame.origin;
 
-    if(curItemPos > 0 && contentOffset >= self.ltemOffset){
+    if(contentOffset > 0 && curItemPos < 4){
        // NSLog(@"%lu", attributes.indexPath.row);
-     //  finalY += (attributes.indexPath.row*self.ltemOffset);
+//        if(curItemPos > 3){
+//            finalY += (attributes.indexPath.row*self.ltemOffset) - self.ltemOffset;
+//        }else{
+//            finalY += (attributes.indexPath.row*self.ltemOffset);
+//        }
+        finalY += (attributes.indexPath.row*self.ltemOffset);
+       
         //finalY += (attributes.indexPath.row*self.ltemOffset - delta);
     }
 
@@ -465,6 +578,8 @@ https://github.com/gleue/TGLStackedViewController/blob/master/TGLStackedViewCont
     attributes.zIndex = attributes.indexPath.row;
 
 }
+
+
 
 - (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds
 {
@@ -520,10 +635,6 @@ https://github.com/gleue/TGLStackedViewController/blob/master/TGLStackedViewCont
 ////        }
 //}
 //
-////- (CGSize)collectionViewContentSize {
-////    CGFloat width = UIScreen.mainScreen.bounds.size.width;
-////    return CGSizeMake(width-60, _contentHeigth);
-////}
 //
 //- (NSArray<__kindof UICollectionViewLayoutAttributes *> *) layoutAttributesForElementsInRect:(CGRect)rect {
 //
