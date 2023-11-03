@@ -20,12 +20,12 @@ NS_ASSUME_NONNULL_BEGIN
 @end
 
 @interface StickCollectionViewFlowLayout : UICollectionViewFlowLayout
-@property (nonatomic, assign) CGFloat firstItemTransform;
-@property (nonatomic, assign) NSInteger startIdx;
-@property (nonatomic, assign) NSInteger prePos;
-
-@property (nonatomic, assign) CGFloat standardHeight;
-@property (nonatomic, assign) CGFloat featuredHeight;
+//@property (nonatomic, assign) CGFloat firstItemTransform;
+//@property (nonatomic, assign) NSInteger startIdx;
+//@property (nonatomic, assign) CGFloat prePos;
+//
+//@property (nonatomic, assign) CGFloat standardHeight;
+//@property (nonatomic, assign) CGFloat featuredHeight;
 @end
 
 NS_ASSUME_NONNULL_END
