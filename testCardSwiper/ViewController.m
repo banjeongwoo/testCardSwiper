@@ -11,7 +11,7 @@
 #import "PayRcmdCardView.h"
 #import "CardDetailViewController.h"
 
-#define USE_MAX_COUNT      1 //1000
+#define USE_MAX_COUNT      4 //1000
 
 @interface ViewController () <SwipeCardsDataSource>
 @property(strong, nonatomic) SwipeCardView *swipeCardView;
@@ -77,15 +77,25 @@
     [_collectionView setCollectionViewLayout:layout];
     
     
-    NSInteger cnt = _dataList.count;
+    //NSInteger cnt = _dataList.count;
  
     [_collectionView reloadData];
     
+  
 //    CGFloat updatedOffset = ((layout.itemSize.width + layout.minimumLineSpacing) * cnt) -  (40 + layout.minimumLineSpacing);
 //    [self.collectionView setContentOffset:CGPointMake(updatedOffset, 0)];
 //    layout.currentPage = cnt;
     
     //[_swipeCardView setCurrnetPositonIndex:1];
+}
+
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    
+    [self.collectionView scrollToItemAtIndexPath: [NSIndexPath indexPathForRow:_dataList.count*2 inSection:0]
+                                                atScrollPosition: UICollectionViewScrollPositionCenteredHorizontally
+                                                        animated: NO];
+    
 }
 
 
@@ -171,6 +181,26 @@
     [_swipeCardView setCurrnetPositonIndex:idx];
 }
 
+-(void) scrollViewDidEndDecelerating: (UIScrollView*) scrollView {
+    
+    //
+    LPayMiddleBannerCollectionViewLayout *layout = (LPayMiddleBannerCollectionViewLayout*)self.collectionView.collectionViewLayout;
+    
+    
+    if(layout.currentPage == _dataList.count * USE_MAX_COUNT -2 ){
+        NSInteger item = _dataList.count * (USE_MAX_COUNT-1);
+        [self.collectionView scrollToItemAtIndexPath: [NSIndexPath indexPathForRow:item inSection:0]
+                                                    atScrollPosition: UICollectionViewScrollPositionCenteredHorizontally
+                                                            animated: NO];
+    } else if( layout.currentPage == _dataList.count + 1){
+        NSInteger item = _dataList.count*2 + 1;
+        
+        [self.collectionView scrollToItemAtIndexPath: [NSIndexPath indexPathForRow:item inSection:0]
+                                                    atScrollPosition: UICollectionViewScrollPositionCenteredHorizontally
+                                                            animated: NO];
+    }
+}
+
 
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -190,24 +220,24 @@
     
 }
 
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    if(_dataList.count > 1){
-//        CollectionViewFlowLayout *layout = (CollectionViewFlowLayout*)_collectionView.collectionViewLayout;
-//        if (layout.currentPage == 0){
-//            NSInteger item = _dataList.count*(kMaxItemCount-1);
-//            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:item inSection:0];
-//            [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
-//
-//            layout.currentPage = item;
-//        }else if (layout.currentPage == (_dataList.count * kMaxItemCount) - 1){
-//            NSInteger item = _dataList.count;
-//            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:item inSection:0];
-//            [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
-//
-//            layout.currentPage = item;
-//        }
-    }
-}
+//- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+//    if(_dataList.count > 1){
+////        CollectionViewFlowLayout *layout = (CollectionViewFlowLayout*)_collectionView.collectionViewLayout;
+////        if (layout.currentPage == 0){
+////            NSInteger item = _dataList.count*(kMaxItemCount-1);
+////            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:item inSection:0];
+////            [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+////
+////            layout.currentPage = item;
+////        }else if (layout.currentPage == (_dataList.count * kMaxItemCount) - 1){
+////            NSInteger item = _dataList.count;
+////            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:item inSection:0];
+////            [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:NO];
+////
+////            layout.currentPage = item;
+////        }
+//    }
+//}
 
 
 @end
