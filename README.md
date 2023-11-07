@@ -109,3 +109,69 @@ extension UltravisualLayout {
   }
 }
 
+
+
+ NSString *cardMsg = @"결제할 때마다 ##최대 1.5% 적립##\n연간 ##240만P## **적립 가능!**";
+    
+    NSString *msg = cardMsg;
+    
+    msg = [msg stringByReplacingOccurrencesOfString:@"##" withString:@""];
+    msg = [msg stringByReplacingOccurrencesOfString:@"**" withString:@""];
+    
+    NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] initWithString:msg];
+
+    @try {
+        
+        UIFont *font = [UIFont boldSystemFontOfSize:18];
+        NSArray *tagList = @[@"##", @"**"]; // 파란색, 굵게
+        for(NSString *tag in tagList){
+            
+           // NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:@""];
+            //[attributedString appendAttributedString:(nonnull NSAttributedString *)
+
+            while ([cardMsg rangeOfString:tag].location != NSNotFound) {
+                NSLog(@"%@", cardMsg);
+                NSRange firstRange = [cardMsg rangeOfString:tag];
+            
+                NSRange secondInstance;// = [[cardMsg substringFromIndex:firstRange.location + firstRange.length] rangeOfString:tag];
+                
+//                if([tag isEqualToString:@"##**"]  ){
+//                    secondInstance = [[cardMsg substringFromIndex:firstRange.location + firstRange.length] rangeOfString:@"**##"];
+//                }else if([tag isEqualToString:@"**##"]){
+//                    secondInstance = [[cardMsg substringFromIndex:firstRange.location + firstRange.length] rangeOfString:@"##**"];
+//                }else{
+//                    secondInstance = [[cardMsg substringFromIndex:firstRange.location + firstRange.length] rangeOfString:tag];
+//                }
+                
+                secondInstance = [[cardMsg substringFromIndex:firstRange.location + firstRange.length] rangeOfString:tag];
+                
+                NSRange finalRange = NSMakeRange(firstRange.location, secondInstance.location);
+                
+                if([tag isEqualToString:@"##"]){ // 파란색
+                    [mutableAttributedString addAttribute:NSForegroundColorAttributeName value: [UIColor redColor] range:finalRange];
+                }else if([tag isEqualToString:@"**"]){ // 굵게
+                    [mutableAttributedString addAttribute:NSFontAttributeName value: font range:finalRange];
+                }
+//                else if([tag isEqualToString:@"##**"] || [tag isEqualToString:@"**##"] ){
+//                    [mutableAttributedString addAttribute:NSForegroundColorAttributeName value: [UIColor redColor] range:finalRange];
+//                    [mutableAttributedString addAttribute:NSFontAttributeName value: font range:finalRange];
+//                }
+//
+                NSRange secondRange = NSMakeRange((finalRange.location + finalRange.length + tag.length), tag.length);
+                
+                cardMsg = [cardMsg stringByReplacingCharactersInRange:secondRange withString:@""];
+                NSLog(@"%@", cardMsg);
+                cardMsg = [cardMsg stringByReplacingCharactersInRange:firstRange withString:@""];
+               
+                NSLog(@"%@", cardMsg);
+            }
+                
+                // NSString *cardMsg = @"결제할 때마다 ##최대 1.5% 적립##\n연간 ##240만P## 적립 가능!";
+        }
+        
+       
+    } @catch (NSException *exception) {
+        NSLog(@"%@", exception.description);
+    }
+    
+    self.textlabel.attributedText = mutableAttributedString;
