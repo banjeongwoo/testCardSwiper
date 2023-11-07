@@ -26,7 +26,7 @@
                                 </constraints>
                             </imageView>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="amu-ZY-fjI">
-                                <rect key="frame" x="0.0" y="359" width="393" height="80"/>
+                                <rect key="frame" x="20" y="359" width="353" height="80"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="WGr-sq-KXg"/>
@@ -83,22 +83,32 @@
                                     <constraint firstAttribute="width" constant="1" id="oSy-Zi-uNR"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0vd-6e-XFK">
+                                <rect key="frame" x="0.0" y="546.33333333333337" width="393" height="21.666666666666629"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="hij-63-lKh" secondAttribute="bottom" constant="50" id="0Qv-Pi-3Ij"/>
                             <constraint firstItem="amu-ZY-fjI" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="300" id="1pp-13-o0P"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="amu-ZY-fjI" secondAttribute="trailing" id="2t2-vP-eHR"/>
-                            <constraint firstItem="amu-ZY-fjI" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="4rd-Qb-J5g"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="amu-ZY-fjI" secondAttribute="trailing" constant="20" id="2t2-vP-eHR"/>
+                            <constraint firstItem="amu-ZY-fjI" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="4rd-Qb-J5g"/>
                             <constraint firstItem="hij-63-lKh" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="7DV-nW-fdf"/>
+                            <constraint firstItem="0vd-6e-XFK" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="86b-bc-hfn"/>
+                            <constraint firstItem="hij-63-lKh" firstAttribute="top" secondItem="0vd-6e-XFK" secondAttribute="bottom" constant="20" id="8gJ-Sp-ctC"/>
                             <constraint firstItem="XQc-QL-q6v" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="BQN-XX-pS9"/>
                             <constraint firstItem="hij-63-lKh" firstAttribute="top" secondItem="XQc-QL-q6v" secondAttribute="bottom" id="FRs-0Y-UVZ"/>
                             <constraint firstItem="XQc-QL-q6v" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="rPj-BC-5aO"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="0vd-6e-XFK" secondAttribute="trailing" id="yID-wt-lg7"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="amu-ZY-fjI" id="Gog-Xf-uZ6"/>
+                        <outlet property="textlabel" destination="0vd-6e-XFK" id="gDv-wK-st5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
