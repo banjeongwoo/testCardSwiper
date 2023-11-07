@@ -109,3 +109,35 @@ extension UltravisualLayout {
   }
 }
 
+ @try {
+            NSArray *tagList = @[@"##", @"**"]; // 파란색, 굵게
+            for(NSString *tag in tagList){
+                
+                while ([cardMsg rangeOfString:tag].location != NSNotFound) {
+                    NSLog(@"%@", cardMsg);
+                    NSRange firstRange = [cardMsg rangeOfString:tag];
+                    
+                     
+                    NSRange secondInstance = [[cardMsg substringFromIndex:firstRange.location + firstRange.length] rangeOfString:tag];
+                    
+                    NSRange finalRange = NSMakeRange(firstRange.location, secondInstance.location-tag.length);
+                    
+                    if([tag isEqualToString:@"##"]){ // 파란색
+                        [attributedString addAttribute:NSForegroundColorAttributeName value: [UIColor rgbColorWithRed:0 green:155 blue:250 alpha:1.0] range:finalRange];
+                    }else if([tag isEqualToString:@"**"]){ // 굵게
+                        [attributedString addAttribute:NSFontAttributeName value: [UIFont fontWithName:@"SUIT-Bold" size: 18] range:finalRange];
+                    }
+                    
+                    NSRange secondRange = NSMakeRange((finalRange.location + finalRange.length), tag.length);
+                    
+                    cardMsg = [cardMsg stringByReplacingCharactersInRange:secondRange withString:@""];
+                    cardMsg = [cardMsg stringByReplacingCharactersInRange:firstRange withString:@""];
+                    NSLog(@"%@", cardMsg);
+                    NSLog(@"%@", cardMsg);
+                }
+                
+                // NSString *cardMsg = @"결제할 때마다 ##최대 1.5% 적립##\n연간 ##240만P## 적립 가능!";
+            }
+        } @catch (NSException *exception) {
+            NSLog(@"%@", exception.description);
+        }
