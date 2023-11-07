@@ -17,6 +17,9 @@
 @property(strong, nonatomic) SwipeCardView *swipeCardView;
 @property(strong, nonatomic) NSArray *dataList;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet UILabel *textlabel;
+
+
 @end
 
 @implementation ViewController
@@ -40,7 +43,7 @@
     
     _dataList = @[
         @"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", @"10",
-        //@"11", @"12", @"13", @"14", @"15", @"16", @"17", @"18", @"19", @"20",
+        @"11", @"12", @"13", @"14", @"15", @"16", @"17", @"18", @"19", @"20",
 
 //        @"21", @"22", @"23", @"24", @"25", @"26", @"27", @"28", @"29", @"30", @"31", @"32", @"33", @"34", @"35", @"36", @"37", @"38", @"39", @"40",
 //
@@ -87,6 +90,174 @@
 //    layout.currentPage = cnt;
     
     //[_swipeCardView setCurrnetPositonIndex:1];
+    
+    NSString *cardMsg = @"결제할 때마다 ##최대 1.5% 적립##\n연간 ##240만P## **적립 가능!**";
+    
+    NSString *msg = cardMsg;
+    
+    msg = [msg stringByReplacingOccurrencesOfString:@"##" withString:@""];
+    msg = [msg stringByReplacingOccurrencesOfString:@"**" withString:@""];
+    
+    NSMutableAttributedString *mutableAttributedString = [[NSMutableAttributedString alloc] init];
+
+    @try {
+        
+        UIFont *font = [UIFont boldSystemFontOfSize:18];
+        NSArray *tagList = @[@"##", @"**"]; // 파란색, 굵게
+        BOOL isContinue = true;
+        do{
+            NSString *tag = @"";
+            NSRange rangtag1 =[cardMsg rangeOfString:tagList[0]];
+            NSRange rangtag2 =[cardMsg rangeOfString:tagList[1]];
+            
+            if(rangtag1.location != NSNotFound && rangtag2.location != NSNotFound){
+                NSString *res;
+                if(rangtag1.location > rangtag2.location ){
+                    //인덱스 8부터 13까지 (6개문자) 추출하기
+                    res = [[cardMsg substringFromIndex : 0] substringToIndex : rangtag2.location];
+                    tag = tagList[1];
+                    cardMsg = [cardMsg substringFromIndex : rangtag2.location];
+                }else{
+                    res = [[cardMsg substringFromIndex : 0] substringToIndex : rangtag1.location];
+                    tag = tagList[0];
+                    cardMsg = [cardMsg substringFromIndex : rangtag1.location];
+                }
+                NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:res];
+                [mutableAttributedString appendAttributedString:attributedString];
+                
+                
+                NSRange secondInstance = [[cardMsg substringFromIndex:tag.length] rangeOfString:tag];
+                
+                if(secondInstance.location != NSNotFound){
+                    NSString *subStr = [[cardMsg substringFromIndex : tag.length] substringToIndex : secondInstance.location];
+                   
+                    if([tag isEqualToString:@"##"]){
+                        NSDictionary *attrs = @{ NSForegroundColorAttributeName : [UIColor redColor] };
+                        NSAttributedString *attrStr = [[NSAttributedString alloc] initWithString:subStr attributes:attrs];
+
+                        [mutableAttributedString appendAttributedString:attrStr];
+                    }else {
+                        NSDictionary *attrs = @{ NSFontAttributeName : font };
+                        NSAttributedString *attrStr = [[NSAttributedString alloc] initWithString:subStr attributes:attrs];
+
+                        [mutableAttributedString appendAttributedString:attrStr];
+                    }
+                    
+                    cardMsg = [cardMsg substringFromIndex : secondInstance.location + secondInstance.length + tag.length];
+                    NSLog(@"");
+                }else{
+                    break;
+                }
+
+            }else if(rangtag1.location != NSNotFound){
+                tag = tagList[0];
+                
+                if(rangtag1.length !=0){
+                    NSString *subStr = [[cardMsg substringFromIndex:0] substringToIndex : rangtag1.location];
+                    NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:subStr];
+                    [mutableAttributedString appendAttributedString:attributedString];
+                    
+                    cardMsg = [cardMsg substringFromIndex : rangtag1.location];
+                }
+                
+                NSRange secondInstance = [[cardMsg substringFromIndex:tag.length] rangeOfString:tag];
+                
+                if(secondInstance.location != NSNotFound){
+                    NSString *subStr = [[cardMsg substringFromIndex : tag.length] substringToIndex : secondInstance.location];
+                    NSDictionary *attrs = @{ NSFontAttributeName : font };
+                    NSAttributedString *attrStr = [[NSAttributedString alloc] initWithString:subStr attributes:attrs];
+
+                    [mutableAttributedString appendAttributedString:attrStr];
+                    
+                    cardMsg = [cardMsg substringFromIndex : secondInstance.location + secondInstance.length + tag.length];
+                }else{
+                    break;
+                }
+            }else if(rangtag2.location != NSNotFound){
+                
+                if(rangtag2.length !=0){
+                    NSString *subStr = [[cardMsg substringFromIndex:0] substringToIndex : rangtag2.location];
+                    NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:subStr];
+                    [mutableAttributedString appendAttributedString:attributedString];
+                    
+                    cardMsg = [cardMsg substringFromIndex : rangtag2.location];
+                }
+                
+                tag = tagList[1];
+                NSRange secondInstance = [[cardMsg substringFromIndex:tag.length] rangeOfString:tag];
+                
+                NSLog(@"|%@|", cardMsg);
+                
+                if(secondInstance.location != NSNotFound){
+                    NSString *subStr = [[cardMsg substringFromIndex : tag.length] substringToIndex : secondInstance.location];
+                    NSDictionary *attrs = @{ NSFontAttributeName : font };
+                    NSAttributedString *attrStr = [[NSAttributedString alloc] initWithString:subStr attributes:attrs];
+
+                    [mutableAttributedString appendAttributedString:attrStr];
+                    
+                    cardMsg = [cardMsg substringFromIndex : secondInstance.location + secondInstance.length + tag.length];
+                }else{
+                    break;
+                }
+            }else{
+                NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:cardMsg];
+                [mutableAttributedString appendAttributedString:attributedString];
+              
+                
+                break;
+            }
+            
+        }while(cardMsg.length);
+        
+#if 0
+        for(NSString *tag in tagList){
+    
+            while ([cardMsg rangeOfString:tag].location != NSNotFound) {
+                NSLog(@"%@", cardMsg);
+                NSRange firstRange = [cardMsg rangeOfString:tag];
+            
+                NSRange secondInstance;// = [[cardMsg substringFromIndex:firstRange.location + firstRange.length] rangeOfString:tag];
+                
+//                if([tag isEqualToString:@"##**"]  ){
+//                    secondInstance = [[cardMsg substringFromIndex:firstRange.location + firstRange.length] rangeOfString:@"**##"];
+//                }else if([tag isEqualToString:@"**##"]){
+//                    secondInstance = [[cardMsg substringFromIndex:firstRange.location + firstRange.length] rangeOfString:@"##**"];
+//                }else{
+//                    secondInstance = [[cardMsg substringFromIndex:firstRange.location + firstRange.length] rangeOfString:tag];
+//                }
+                
+                secondInstance = [[cardMsg substringFromIndex:firstRange.location + firstRange.length] rangeOfString:tag];
+                
+                NSRange finalRange = NSMakeRange(firstRange.location, secondInstance.location);
+                
+                if([tag isEqualToString:@"##"]){ // 파란색
+                    [mutableAttributedString addAttribute:NSForegroundColorAttributeName value: [UIColor redColor] range:finalRange];
+                }else if([tag isEqualToString:@"**"]){ // 굵게
+                    [mutableAttributedString addAttribute:NSFontAttributeName value: font range:finalRange];
+                }
+//                else if([tag isEqualToString:@"##**"] || [tag isEqualToString:@"**##"] ){
+//                    [mutableAttributedString addAttribute:NSForegroundColorAttributeName value: [UIColor redColor] range:finalRange];
+//                    [mutableAttributedString addAttribute:NSFontAttributeName value: font range:finalRange];
+//                }
+//
+                NSRange secondRange = NSMakeRange((finalRange.location + finalRange.length + tag.length), tag.length);
+                
+                cardMsg = [cardMsg stringByReplacingCharactersInRange:secondRange withString:@""];
+                NSLog(@"%@", cardMsg);
+                cardMsg = [cardMsg stringByReplacingCharactersInRange:firstRange withString:@""];
+               
+                NSLog(@"%@", cardMsg);
+            }
+                
+                // NSString *cardMsg = @"결제할 때마다 ##최대 1.5% 적립##\n연간 ##240만P## 적립 가능!";
+        }
+        
+#endif
+    } @catch (NSException *exception) {
+        NSLog(@"%@", exception.description);
+    }
+    
+    self.textlabel.attributedText = mutableAttributedString;
 }
 
 - (void)viewWillLayoutSubviews {
@@ -187,17 +358,21 @@
     LPayMiddleBannerCollectionViewLayout *layout = (LPayMiddleBannerCollectionViewLayout*)self.collectionView.collectionViewLayout;
     
     
-    if(layout.currentPage == _dataList.count * USE_MAX_COUNT -2 ){
-        NSInteger item = _dataList.count * (USE_MAX_COUNT-1);
+    if(layout.currentPage == _dataList.count * (USE_MAX_COUNT -2) ){
+        NSInteger item = _dataList.count * 2;
         [self.collectionView scrollToItemAtIndexPath: [NSIndexPath indexPathForRow:item inSection:0]
                                                     atScrollPosition: UICollectionViewScrollPositionCenteredHorizontally
                                                             animated: NO];
-    } else if( layout.currentPage == _dataList.count + 1){
-        NSInteger item = _dataList.count*2 + 1;
+        
+        layout.currentPage = item;
+    } else if( layout.currentPage == _dataList.count){
+        NSInteger item = _dataList.count * (USE_MAX_COUNT -2);
         
         [self.collectionView scrollToItemAtIndexPath: [NSIndexPath indexPathForRow:item inSection:0]
                                                     atScrollPosition: UICollectionViewScrollPositionCenteredHorizontally
                                                             animated: NO];
+        
+        layout.currentPage = item;
     }
 }
 
@@ -276,7 +451,7 @@
         self.isSetup = NO;
         
         self.spaceing = 12;
-        self.sideItemScale = 0.8f;
+        self.sideItemScale = 1.0f;
         self.sideItemAlpha = 1.0f;
         self.currentPage = 0;
         
@@ -304,9 +479,9 @@
             offset = (i-1)*(self.itemSize.width+self.minimumLineSpacing);
             
             offset = ceil(width - offset)/2.0f + (self.itemSize.width/2.0f+self.minimumLineSpacing);
-            //offset = offset - (self.itemSize.width + self.minimumLineSpacing);
+            offset = offset - (self.itemSize.width + self.minimumLineSpacing);
             
-            offset = offset - (self.itemSize.width + self.minimumLineSpacing)*self.sideItemScale;
+            //offset = offset - (self.itemSize.width + self.minimumLineSpacing)*self.sideItemScale;
             offset = offset + (self.itemSize.width + self.minimumLineSpacing)*2; // 0을 중간으로
             break;
         }
@@ -320,10 +495,10 @@
     
     self.itemSize = CGSizeMake(80, 80);
     self.spaceing = 12;
-    self.sideItemScale = 0.5f;
+    self.sideItemScale = 1.0f;
     self.sideItemAlpha = 1.0f;
-    
-    self.minimumLineSpacing = self.spaceing - (self.itemSize.width-(self.itemSize.width*self.sideItemScale))/2.0;
+    self.minimumLineSpacing = self.spaceing;
+    //self.minimumLineSpacing = self.spaceing - (self.itemSize.width-(self.itemSize.width*self.sideItemScale))/2.0;
     self.sectionInset = UIEdgeInsetsMake(0, 0, 0, 0);
     self.minimumInteritemSpacing = 0;
 }
