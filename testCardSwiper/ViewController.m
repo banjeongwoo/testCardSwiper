@@ -91,7 +91,7 @@
     
     //[_swipeCardView setCurrnetPositonIndex:1];
     
-    NSString *cardMsg = @"결제할 때마다 ##최대 1.5% 적립##\n연간 ##240만P## **적립 가능!**";
+    NSString *cardMsg = @"결제할 때마다 ##최대 1.5% 적립##\n연간 ##240만P## **적립 가능!**이상해";
     
     NSString *msg = cardMsg;
     
@@ -113,7 +113,6 @@
             if(rangtag1.location != NSNotFound && rangtag2.location != NSNotFound){
                 NSString *res;
                 if(rangtag1.location > rangtag2.location ){
-                    //인덱스 8부터 13까지 (6개문자) 추출하기
                     res = [[cardMsg substringFromIndex : 0] substringToIndex : rangtag2.location];
                     tag = tagList[1];
                     cardMsg = [cardMsg substringFromIndex : rangtag2.location];
@@ -197,13 +196,22 @@
                     
                     cardMsg = [cardMsg substringFromIndex : secondInstance.location + secondInstance.length + tag.length];
                 }else{
+                    cardMsg = @"";
                     break;
                 }
             }else{
+                
+                UIFont *font = [UIFont systemFontOfSize:18];
+                
                 NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:cardMsg];
+                
+                NSDictionary *attrs = @{ NSFontAttributeName : font };
+                NSAttributedString *attrStr = [[NSAttributedString alloc] initWithString:cardMsg attributes:attrs];
+
+                
                 [mutableAttributedString appendAttributedString:attributedString];
               
-                
+                cardMsg = @"";
                 break;
             }
             
