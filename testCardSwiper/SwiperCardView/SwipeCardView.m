@@ -187,7 +187,7 @@
     CGFloat degress = [self rotationDegrees:index];
     
     if(xoffset < 0){
-        xoffset = xoffset / 4;
+        xoffset = xoffset / 4.5;
     }
     
     NSLog(@"xoffset %f, scale %f", xoffset, scale);
@@ -274,7 +274,7 @@
     CGFloat nextdegress = [self rotationDegrees:nextIndex];
     
     CGFloat scale = [self scale:index];
-    CGFloat nextscale = [self scale:nextIndex];
+    //CGFloat nextscale = [self scale:nextIndex];
     
     
     CGFloat preX = xoffset;
@@ -315,6 +315,13 @@
     
     cardView.frame = cardViewFrame;
     
+    if(percent == 0){
+        NSLog(@"item chage frame %lu cardViewFrame : %@", index, NSStringFromCGRect(cardViewFrame));
+        
+    }
+    // chagen frame 4 cardViewFrame : {{80, 19.650000000000006}, {237.5466666666666, 157.19999999999996}}
+    
+    // 3 cardView.frame :             {{74.806467034184891, 11.556256741408902}, {247.93373259829684, 173.38748651718217}}
     cardView.transform = CGAffineTransformRotate(CGAffineTransformIdentity, degress*M_PI/180);
     
     [cardView setNeedsLayout];
@@ -381,8 +388,18 @@
             // 위치 각도 스케일 보정
             if(direction == kMoveLeft){
                 [self frameCardViews:v atIndex:v.index atNextIndex:v.index-1  percent:1.0-percent direction:direction];
+                
+                if(v.index == index+3){
+                    v.hidden = NO;
+                    v.alpha = MIN(percent , 0.2);
+                }
             }else{
                 [self frameCardViews:v atIndex:v.index atNextIndex:v.index+1  percent:1.0-percent direction:direction];
+                
+                if(v.index == index-3){
+                    v.hidden = NO;
+                    v.alpha = MIN(percent , 0.2);
+                }
             }
         }
     }
@@ -411,46 +428,58 @@
     
     NSLog(@"%d", (int)self.currentIndex);
     
-    [UIView animateWithDuration:0.3f animations:^{
-        for(CardView *v in self.subviews){
-            v.transform = CGAffineTransformIdentity;
-            [v layoutIfNeeded];
+//    [UIView animateWithDuration:0.5f animations:^{
+//
+//
+//    }];
+    
+    for(CardView *v in self.subviews){
+        v.transform = CGAffineTransformIdentity;
+        [v layoutIfNeeded];
+        
+        if(v.index == self.currentIndex){
+            v.userInteractionEnabled = YES;
+        }else{
+            v.userInteractionEnabled = NO;
+        }
+        
+       
+        if(self.previousIndex == v.index){
+//            [self frameCardViews:v atIndex:v.index-1];
+//            [UIView animateWithDuration:0.2f animations:^{
+//                [self frameCardViews:v atIndex:v.index];
+//            }];
             
-            if(v.index == self.currentIndex){
-                v.userInteractionEnabled = YES;
-            }else{
-                v.userInteractionEnabled = NO;
-            }
             
             [self frameCardViews:v atIndex:v.index];
-            
-            // 화면 숨기 처리
-            if(v.index < self.currentIndex - 2){
-                v.hidden = YES;
-            }else if(v.index > self.currentIndex + 2){
-                v.hidden = YES;
-            }else{
-                v.hidden = NO;
-            }
+           
+        }else{
+            [self frameCardViews:v atIndex:v.index];
         }
         
-        [self cardItem_add_and_remove];
-        
-        for(CardView *v in self.subviews){
-            NSLog(@"zPosition index %d zPosition: %f", (int)v.index, v.layer.zPosition);
+        // 화면 숨기 처리
+        if(v.index < self.currentIndex - 2){
+            v.hidden = YES;
+        }else if(v.index > self.currentIndex + 2){
+            v.hidden = YES;
+        }else{
+            v.hidden = NO;
+            v.alpha = 1.0f;
         }
-        
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-            [self.delegate SwipeCardView:cardView currentPage:self.currentIndex];
-        });
-        
-        self.previousIndex = self.currentIndex;
-        
-        NSLog(@"self.currentIndex : %d", (int)self.currentIndex);
-        
-    }];
+    }
     
-   
+    [self cardItem_add_and_remove];
+    
+    for(CardView *v in self.subviews){
+        NSLog(@"zPosition index %d zPosition: %f", (int)v.index, v.layer.zPosition);
+    }
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+        [self.delegate SwipeCardView:cardView currentPage:self.currentIndex];
+    });
+    
+    self.previousIndex = self.currentIndex;
+    NSLog(@"self.currentIndex : %d", (int)self.currentIndex);
     
 }
 
@@ -587,6 +616,17 @@
             }
             
             [self frameCardViews:v atIndex:v.index];
+            
+            //--show hide
+            
+            if(v.index < self.currentIndex - 2){
+                v.hidden = YES;
+            }else if(v.index > self.currentIndex + 2){
+                v.hidden = YES;
+            }else{
+                v.hidden = NO;
+                v.alpha = 1.0f;
+            }
         }
     }];
 }

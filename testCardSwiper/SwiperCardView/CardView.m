@@ -199,9 +199,9 @@
     
     CardView *card = (CardView*)sender.view;
     
-    //CGFloat width = [UIScreen mainScreen].bounds.size.width;
-    //CGFloat offset = width/2;
+    CGFloat width = [UIScreen mainScreen].bounds.size.width;
     
+    CGFloat wh = 7.0*(width/393.0);
     
     CGPoint point = [sender translationInView:self];
     
@@ -210,7 +210,6 @@
     CGPoint centerOfParentContainer = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
     
     NSLog(@"--- point x: %f", centerOfParentContainer.x + point.x);
-    CGFloat width = [UIScreen mainScreen].bounds.size.width;
   
     if(point.x < 0){
         _direction = kMoveLeft;
@@ -225,12 +224,6 @@
         maxMovePosiotion = 10;//maxMovePosiotion*0.9;
     }
     
-    if(_direction == kMoveRight && fabs(point.x) < maxMovePosiotion){
-        card.center = CGPointMake(centerOfParentContainer.x + point.x, centerOfParentContainer.y);
-    }else if(_direction == kMoveLeft && fabs(point.x) < maxMovePosiotion){
-        card.center = CGPointMake(centerOfParentContainer.x + point.x, centerOfParentContainer.y);
-    }
-
     NSLog(@"handlePanGesture %f, %f", card.center.x, card.center.y);
     
     switch(sender.state) {
@@ -257,15 +250,29 @@
             //(1.0 - 0.9)
             // 사이즈
             //(1.0-percent)*0.9;
+            
+            CGFloat yOffset = percent*wh;
+            
+            if(_direction == kMoveRight && fabs(point.x) < maxMovePosiotion){
+                card.center = CGPointMake(centerOfParentContainer.x + point.x, centerOfParentContainer.y-yOffset);
+            }else if(_direction == kMoveLeft && fabs(point.x) < maxMovePosiotion){
+                card.center = CGPointMake(centerOfParentContainer.x + point.x, centerOfParentContainer.y-yOffset);
+            }
+            
             CGFloat scale = 0.9 + (1.0-percent)*0.1;
             
             NSLog(@"--->> angle: %f percent : %f scale : %f", angle, percent, scale);
+            if((self.index == 0 && _direction == kMoveRight) || (self.isLastCell && _direction == kMoveLeft)){
+                angle = 0.0f;
+                scale = 1.0f;
+            }
             
-            //CGAffineTransform transform = CGAffineTransformScale(CGAffineTransformIdentity, (1.0-percent), (1.0-percent));
             CGAffineTransform transform = CGAffineTransformScale(CGAffineTransformIdentity, scale, scale);
-            card.transform = CGAffineTransformRotate(transform, angle);
+            card.transform = CGAffineTransformRotate(transform, angle*1.3);
             
-            if(!( (self.index == 0 && _direction == kMoveRight) || (self.isLastCell && _direction == kMoveLeft))){
+            
+
+            if(!((self.index == 0 && _direction == kMoveRight) || (self.isLastCell && _direction == kMoveLeft))){
                 [self.delegate swipeChanged:self index:self.index direction:_direction percent:percent];
             }
        
