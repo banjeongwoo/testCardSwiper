@@ -87,8 +87,8 @@
     //    _shadowView.layer.shadowRadius = 10.0;
     
     _shadowImageView = [[UIImageView alloc] init];
-    _shadowImageView.backgroundColor = [UIColor clearColor];
-    _shadowImageView.alpha = 1.0;
+    //_shadowImageView.backgroundColor = [UIColor clearColor];
+    //_shadowImageView.alpha = 1.0;
     _shadowImageView.image = [UIImage imageNamed:@"icolpayshadow"];
     
     [self addSubview:_shadowImageView];
@@ -160,7 +160,7 @@
     _indexlabel.text = [NSString stringWithFormat:@"%d", (int)index+1];
     
             if(index%5 == 0){
-                _bgView.backgroundColor = [UIColor yellowColor];
+                _bgView.backgroundColor = [UIColor blueColor];
             }else if(index%5 == 1){
                 _bgView.backgroundColor = [UIColor purpleColor];
             }else if(index%5 == 2){
@@ -207,7 +207,7 @@
     
     NSLog(@"point x: %f", point.x);
     
-    CGPoint centerOfParentContainer = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
+    CGPoint centerOfParentContainer = CGPointMake(width/2, self.frame.size.height/2);
     
     NSLog(@"--- point x: %f", centerOfParentContainer.x + point.x);
   
@@ -268,7 +268,7 @@
             }
             
             CGAffineTransform transform = CGAffineTransformScale(CGAffineTransformIdentity, scale, scale);
-            card.transform = CGAffineTransformRotate(transform, angle*1.3);
+            card.transform = CGAffineTransformRotate(transform, angle);
             
             
 
@@ -336,3 +336,4 @@
 
 
 @end
+
