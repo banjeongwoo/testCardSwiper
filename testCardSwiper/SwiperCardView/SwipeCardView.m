@@ -12,16 +12,7 @@
 @property (nonatomic) NSInteger numberOfCards;
 @property (nonatomic) NSInteger cardsToBeVisible;
 @property (nonatomic) NSInteger remainingcards;
-
-@property (nonatomic) CGFloat horizontalInset;
-@property (nonatomic) CGFloat verticalInset;
 @property (nonatomic) CGRect orgRect;
-
-//@property (nonatomic) NSInteger leftInsertIdx;
-//@property (nonatomic) NSInteger rightInsertIdx;
-
-
-// new ----
 
 @property (nonatomic) NSInteger previousIndex;
 @property (nonatomic) CGFloat cardPadding;
@@ -61,16 +52,18 @@
 - (void)initial {
     _cardViews = [NSMutableArray array];
     _orgRect = self.bounds;
-
-    _horizontalInset = 40;
-    _verticalInset = 5;
     _cardsToBeVisible = 7;
-   
-
-    _cardPadding = 40.0;
+    _cardPadding = 25.0;
     self.currentIndex = 0;
     //_realCurrentIndex = 0;
     _previousIndex = 0;
+    
+    CGFloat width = [UIScreen mainScreen].bounds.size.width;
+    CGFloat w = 272*(width/360.0);
+    CGFloat h = 180*(width/360.0);
+ 
+    
+    _orgRect = CGRectMake((width-w)/2, 0, w, h);
 }
 
 -(void) setCurrnetPositonIndex:(NSInteger) index{
@@ -146,9 +139,9 @@
     NSInteger topCardProgress = [self currentPosition:index];
     CGFloat padding = _cardPadding;
     CGFloat x = ((CGFloat)index - _currentIndex)*padding;
-    if(topCardProgress > 0 && topCardProgress < 0.99 && index < (_numberOfCards -1)){
-        return x * [self swingOutMultiplier:topCardProgress];
-    }
+//    if(topCardProgress > 0 && topCardProgress < 0.99 && index < (_numberOfCards -1)){
+//        return x * [self swingOutMultiplier:topCardProgress];
+//    }
     
     return x;
 }
@@ -179,7 +172,12 @@
 
 
 -(void) frameCardViews:(CardView *) cardView atIndex:(NSInteger) index {
+    CGFloat width = [UIScreen mainScreen].bounds.size.width;
+    
     CGRect cardViewFrame = _orgRect;
+    CGFloat orgw = self.orgRect.size.width;
+    CGFloat orgCenterX =  width/2;
+    CGFloat orgH = self.orgRect.size.height;
     
     cardView.layer.zPosition = [self zIndex:index];
     CGFloat xoffset = [self xOffset:index];
@@ -187,20 +185,32 @@
     CGFloat degress = [self rotationDegrees:index];
     
     if(xoffset < 0){
-        xoffset = xoffset / 4.5;
+  //      xoffset *= 0.3;
     }
     
-    NSLog(@"xoffset %f, scale %f", xoffset, scale);
+    //NSLog(@"oooo frameCardViews index : %lu xoffset %f, scale %f %@",index, xoffset, scale, NSStringFromCGRect(cardViewFrame));
+    NSLog(@"oooo frameCardViews index : %lu xoffset %f, scale %f %@",index, xoffset, scale, NSStringFromCGRect(self.bounds) );
     
-    cardViewFrame.origin.x += xoffset;
+
+    
+  
+    cardViewFrame.origin.x =  0;//orgCenterX  - orgw/2 + xoffset;
     
     cardViewFrame.size.width = cardViewFrame.size.width*scale;
     cardViewFrame.size.height = cardViewFrame.size.height*scale;
     
-    cardViewFrame.origin.y = (_orgRect.size.height - cardViewFrame.size.height)/2;
-    
+    cardViewFrame.origin.y = 0; //(orgH - cardViewFrame.size.height)/2.0f;
     cardView.frame = cardViewFrame;
-    cardView.transform = CGAffineTransformRotate(CGAffineTransformIdentity, degress*M_PI/180);
+    
+    cardView.center = CGPointMake(orgCenterX + xoffset, self.frame.origin.y);
+    
+     
+        if(degress < 0){
+            degress = -degress;
+            cardView.transform = CGAffineTransformRotate(CGAffineTransformIdentity, -(degress)*M_PI/180);
+        }else{
+            cardView.transform = CGAffineTransformRotate(CGAffineTransformIdentity, degress*M_PI/180);
+        }
     [cardView setNeedsLayout];
     [cardView layoutIfNeeded];
     
@@ -267,6 +277,14 @@
     
     CGRect cardViewFrame = _orgRect;
     
+    CGFloat width = [UIScreen mainScreen].bounds.size.width;
+    
+   
+    CGFloat orgW = self.orgRect.size.width;
+    CGFloat orgH = self.orgRect.size.height;
+    CGFloat orgCenterX =  width/2;
+  
+    
     CGFloat xoffset = [self xOffset:index];
     CGFloat nextxoffset = [self xOffset:nextIndex];
     
@@ -274,7 +292,32 @@
     CGFloat nextdegress = [self rotationDegrees:nextIndex];
     
     CGFloat scale = [self scale:index];
-    //CGFloat nextscale = [self scale:nextIndex];
+//    CGFloat nextscale = [self scale:nextIndex];
+    
+//    if(percent == 0){
+//       
+//        if(nextxoffset < 0){
+//            nextxoffset = nextxoffset/4.0;
+//        }
+//       
+//        cardViewFrame.origin.x = nextxoffset;
+//        
+//        cardViewFrame.size.width = cardViewFrame.size.width*nextscale;
+//        cardViewFrame.size.height = cardViewFrame.size.height*nextscale;
+//        
+//        cardViewFrame.origin.y = (_orgRect.size.height - cardViewFrame.size.height)/2;
+//        
+//        cardView.frame = cardViewFrame;
+//        cardView.transform = CGAffineTransformRotate(CGAffineTransformIdentity, nextdegress*M_PI/180);
+//        [cardView setNeedsLayout];
+//        [cardView layoutIfNeeded];
+//        if(index == 3){
+//            NSLog(@"=== change index : %lu xoffset %f, scale %f %@",index, xoffset, scale, NSStringFromCGRect(cardViewFrame));
+//        }
+//        return;
+//        
+//        
+//    }
     
     
     CGFloat preX = xoffset;
@@ -295,35 +338,101 @@
         }
     }else{
         if(index > self.currentIndex){
-            scale =  scale - (1.0-percent)*0.1;
+            scale = scale - (1.0-percent)*0.1;
         }else{
-            scale =  scale + (1.0-percent)*0.1;
+            scale = scale + (1.0-percent)*0.1;
         }
     }
     
-      
-    if((preX + xoffset) < 0){
-        cardViewFrame.origin.x += (preX + xoffset)/4;
-    }else{
-        cardViewFrame.origin.x += (preX + xoffset);
-    }
+
+//    if(direction == kMoveLeft){
+//        if(self.currentIndex > index+1){
+//            if((preX + xoffset) < 0){
+//                cardViewFrame.origin.x += (preX + xoffset)/8;
+//            }else{
+//                cardViewFrame.origin.x += (preX + xoffset);
+//            }
+//        }else{
+//
+//        }
+//
+//
+//    }else{
+//        if((preX + xoffset) < 0){
+//            cardViewFrame.origin.x += (preX + xoffset)/4;
+//        }else{
+//            cardViewFrame.origin.x += (preX + xoffset);
+//        }
+//    }
     
-    cardViewFrame.size.width = cardViewFrame.size.width*scale;
-    cardViewFrame.size.height = cardViewFrame.size.height*scale;
+//       if((preX + xoffset) < 0){
+//        cardViewFrame.origin.x += (preX + xoffset)/4;
+//    }else{
+//        cardViewFrame.origin.x += (preX + xoffset);
+//    }
     
-    cardViewFrame.origin.y = (_orgRect.size.height - cardViewFrame.size.height)/2;
+//    cardView.transform = CGAffineTransformRotate(CGAffineTransformIdentity, degress*M_PI/180);
+//
+//
+//    cardViewFrame.origin.x += (preX + xoffset);
+//
+//    cardViewFrame.size.width = cardViewFrame.size.width*scale;
+//    cardViewFrame.size.height = cardViewFrame.size.height*scale;
+//
+//    cardViewFrame.origin.y = (_orgRect.size.height - cardViewFrame.size.height)/2;
+//
+//    cardView.frame = cardViewFrame;
     
+            /*
+             cardViewFrame.origin.x =  0;//orgCenterX  - orgw/2 + xoffset;
+             
+             cardViewFrame.size.width = cardViewFrame.size.width*scale;
+             cardViewFrame.size.height = cardViewFrame.size.height*scale;
+             
+             cardViewFrame.origin.y = (orgH - cardViewFrame.size.height)/2.0f;
+             cardView.frame = cardViewFrame;
+             
+             cardView.center = CGPointMake(orgCenterX + xoffset, self.frame.origin.y);
+             
+             cardView.transform = CGAffineTransformRotate(CGAffineTransformIdentity, degress*M_PI/180);
+             */
+             
+       //
+    
+    cardViewFrame.origin.x =  0;//orgCenterX  - orgw/2 + xoffset;
+    cardViewFrame.origin.y = 0;
+    cardViewFrame.size.width = orgW*scale;
+    cardViewFrame.size.height = orgH*scale;
+    
+    //(orgH - cardViewFrame.size.height)/2.0f;
     cardView.frame = cardViewFrame;
     
-    if(percent == 0){
-        NSLog(@"item chage frame %lu cardViewFrame : %@", index, NSStringFromCGRect(cardViewFrame));
-        
-    }
-    // chagen frame 4 cardViewFrame : {{80, 19.650000000000006}, {237.5466666666666, 157.19999999999996}}
-    
-    // 3 cardView.frame :             {{74.806467034184891, 11.556256741408902}, {247.93373259829684, 173.38748651718217}}
+    cardView.center = CGPointMake(orgCenterX + (preX + xoffset), self.frame.origin.y);
     cardView.transform = CGAffineTransformRotate(CGAffineTransformIdentity, degress*M_PI/180);
+  
+     
     
+    if(percent == 0){
+        //NSLog(@"item chage frame %lu cardViewFrame : %@", index, NSStringFromCGRect(cardViewFrame));
+    }
+    
+    if(index == 3){
+        NSLog(@"=== change %lu preX %f + %f = %f scale: %f",  index, preX, xoffset, (preX + xoffset), scale);
+        NSLog(@"=== change %lu org: %@ frame: %@",  index,NSStringFromCGRect(_orgRect),  NSStringFromCGRect(cardView.frame));
+    }
+    //oooo 2 cardView.frame :                   {{37.018345501623436, 5.1757816663227203}, {271.16330899675307, 184.64843666735453}}
+    //{0, 0}, {294.66666666666663, 195}} frame: {{34.201876364500308, 9.75}, {276.79624727099934, 175.5}}
+    //     === change 3 org: {{0, 0}, {294.66666666666663, 195}} frame: {{36.201876364500308, 9.75}, {276.79624727099934, 175.5}}
+    
+ //oooo frameCardViews index : 2 xoffset 40.000000, scale 0.900000 {{0, 0}, {294.66666666666663, 195}}
+ //oooo 2 cardView.frame : {{37.018345501623436, 5.1757816663227203}, {271.16330899675307, 184.64843666735453}}
+    
+//
+
+
+     
+    // 3 cardView.frame :             {{74.806467034184891, 11.556256741408902}, {247.93373259829684, 173.38748651718217}}
+     
     [cardView setNeedsLayout];
     [cardView layoutIfNeeded];
   
@@ -333,7 +442,7 @@
 -(void) swipeStart:(CardView*) cardView{
     _currentPreGestureZindex = cardView.layer.zPosition;
     //_cardPadding = 55;
-    _cardPadding = 40;
+    //_cardPadding = 40;
     _nextPreIndex = -1;
     NSLog(@"swipeStart !!!!");
     for(CardView *v in self.subviews){
@@ -406,7 +515,7 @@
 }
 
 -(void) swipeDidEnd:(CardView*) cardView index:(NSInteger) index direction:(EnumCardSwipe) direction{
-    _cardPadding = 40;
+    //_cardPadding = 40;
     NSLog(@"swipeDidEnd %d", (int)index);
     if(direction == kMoveLeft){
         NSLog(@"swipeDidEnd xxxxxx kMoveLeft");
@@ -420,10 +529,8 @@
     // 현재 index
     if(kMoveLeft == direction){
         self.currentIndex += 1;
-        //self.realCurrentIndex += 1;
     }else{
         self.currentIndex -= 1;
-        //self.realCurrentIndex -= 1;
     }
     
     NSLog(@"%d", (int)self.currentIndex);
@@ -590,9 +697,9 @@
     }
     
 //    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-//        
-//        
-//        
+//
+//
+//
 //    });
 }
 
@@ -602,7 +709,7 @@
 }
 
 -(void) swipeReset{
-    _cardPadding = 40;
+   // _cardPadding = 40;
     _currentIndex = _previousIndex;
     [UIView animateWithDuration:0.5f animations:^{
         for(CardView *v in self.subviews){
