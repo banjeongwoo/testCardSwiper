@@ -36,11 +36,18 @@
     CGFloat w = 272*(width/360.0);
     CGFloat h = 180*(width/360.0);
     
-    _swipeCardView = [[SwipeCardView alloc] initWithFrame:CGRectMake((width-w)/2, 100, w, h)];
+    //_swipeCardView = [[SwipeCardView alloc] initWithFrame:CGRectMake((width-w)/2, 100, w, h)];
+    //_swipeCardView.dataSource = (id)self;
+    //_swipeCardView.delegate = (id)self;
+    //[self.view addSubview:_swipeCardView];
+    
+    //_swipeCardView = [[SwipeCardView alloc] initWithFrame:CGRectMake((width-w)/2, 100, w, h)];
+    
+    _swipeCardView = [[SwipeCardView alloc] initWithFrame:CGRectMake(0, 100, w, h)];
+    
     _swipeCardView.dataSource = (id)self;
     _swipeCardView.delegate = (id)self;
     [self.view addSubview:_swipeCardView];
-    
     _dataList = @[
         @"1", @"2", @"3", @"4", @"5", @"6", @"7", @"8", @"9", @"10",
         @"11", @"12", @"13", @"14", @"15", @"16", @"17", @"18", @"19", @"20",
