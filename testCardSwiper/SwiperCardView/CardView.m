@@ -207,7 +207,7 @@
     
     NSLog(@"point x: %f", point.x);
     
-    CGPoint centerOfParentContainer = CGPointMake(width/2, self.frame.size.height/2);
+    CGPoint centerOfParentContainer = CGPointMake(width/2, self.center.y);
     
     NSLog(@"--- point x: %f", centerOfParentContainer.x + point.x);
   
@@ -254,9 +254,9 @@
             CGFloat yOffset = percent*wh;
             
             if(_direction == kMoveRight && fabs(point.x) < maxMovePosiotion){
-                card.center = CGPointMake(centerOfParentContainer.x + point.x, centerOfParentContainer.y-yOffset);
+                card.center = CGPointMake(centerOfParentContainer.x + point.x, centerOfParentContainer.y);
             }else if(_direction == kMoveLeft && fabs(point.x) < maxMovePosiotion){
-                card.center = CGPointMake(centerOfParentContainer.x + point.x, centerOfParentContainer.y-yOffset);
+                card.center = CGPointMake(centerOfParentContainer.x + point.x, centerOfParentContainer.y);
             }
             
             CGFloat scale = 0.9 + (1.0-percent)*0.1;

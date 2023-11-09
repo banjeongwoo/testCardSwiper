@@ -43,7 +43,7 @@
     
     //_swipeCardView = [[SwipeCardView alloc] initWithFrame:CGRectMake((width-w)/2, 100, w, h)];
     
-    _swipeCardView = [[SwipeCardView alloc] initWithFrame:CGRectMake(0, 100, w, h)];
+    _swipeCardView = [[SwipeCardView alloc] initWithFrame:CGRectMake(0, 50, w, h)];
     
     _swipeCardView.dataSource = (id)self;
     _swipeCardView.delegate = (id)self;
@@ -288,7 +288,8 @@
 - (nonnull __kindof CardView *)cardAtIndex:(NSInteger)index {
     
     if(index == 0){
-        PayRegCardView *view = [[PayRegCardView alloc] init];
+        //PayRegCardView *view = [[PayRegCardView alloc] init];
+        CardView *view = [[CardView alloc] init];
         [view setData:@(index)];
         return view;
     }else if(index == _dataList.count-1){
