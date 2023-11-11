@@ -201,7 +201,11 @@
     
     CGFloat width = [UIScreen mainScreen].bounds.size.width;
     
-    CGFloat wh = 7.0*(width/393.0);
+    CGFloat baseyOffset = 10.0*(width/393.0);
+    
+    if((self.index == 0 && _direction == kMoveRight) || (self.isLastCell && _direction == kMoveLeft)){
+        baseyOffset = 0.0f;
+    }
     
     CGPoint point = [sender translationInView:self];
     
@@ -219,10 +223,7 @@
         _direction = kMoveNone;
     }
     
-    CGFloat maxMovePosiotion = (width - self.frame.size.width)/2 - 10;
-    if(((self.index == 0 && _direction == kMoveRight) || (self.isLastCell && _direction == kMoveLeft))){
-        maxMovePosiotion = 10;//maxMovePosiotion*0.9;
-    }
+    CGFloat maxMovePosiotion = (width - self.frame.size.width)/2.0f - 12;
     
     NSLog(@"handlePanGesture %f, %f", card.center.x, card.center.y);
     
@@ -247,15 +248,9 @@
             
             NSLog(@"--- angle: %f percent : %f", angle, percent);
             
-            //(1.0 - 0.9)
-            // 사이즈
-            //(1.0-percent)*0.9;
-            
-            CGFloat yOffset = percent*wh;
-            
-            if(_direction == kMoveRight && fabs(point.x) < maxMovePosiotion){
-                card.center = CGPointMake(centerOfParentContainer.x + point.x, centerOfParentContainer.y);
-            }else if(_direction == kMoveLeft && fabs(point.x) < maxMovePosiotion){
+            CGFloat yOffset = -baseyOffset*percent;
+        
+            if( fabs(point.x) < maxMovePosiotion){
                 card.center = CGPointMake(centerOfParentContainer.x + point.x, centerOfParentContainer.y);
             }
             
@@ -267,8 +262,16 @@
                 scale = 1.0f;
             }
             
-            CGAffineTransform transform = CGAffineTransformScale(CGAffineTransformIdentity, scale, scale);
-            card.transform = CGAffineTransformRotate(transform, angle);
+            CATransform3D transform = CATransform3DIdentity;
+            //transform.m32 = 1.0/500;
+            transform.m34 = 1.0/900.0;
+            transform = CATransform3DTranslate(transform, 0, yOffset,0);
+            transform = CATransform3DScale(transform, scale, scale, 1);
+            transform = CATransform3DRotate(transform, angle, 0, 0, 1);
+            card.layer.transform = transform;
+            
+//            CGAffineTransform transform = CGAffineTransformScale(CGAffineTransformIdentity, scale, scale);
+//            card.transform = CGAffineTransformRotate(transform, angle);
             
             
 
@@ -295,33 +298,29 @@
             
             if(percent < 1.0){
                 NSLog(@"UIGestureRecognizerStateEnded percent --- not");
-             
-                card.transform = CGAffineTransformIdentity;
-                card.center = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
+                card.center = centerOfParentContainer;
+                card.layer.transform = CATransform3DIdentity;
                 [self layoutIfNeeded];
                 _direction = kMoveNone;
                 [self.delegate swipeReset];
                 
             }else if(self.index == 0 && _direction == kMoveRight){
-                card.transform = CGAffineTransformIdentity;
-                card.center = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
+                card.center = centerOfParentContainer;
+                card.layer.transform = CATransform3DIdentity;
                 [self layoutIfNeeded];
                 _direction = kMoveNone;
                 [self.delegate swipeReset];
             }else if(self.isLastCell && _direction == kMoveLeft){
-                card.transform = CGAffineTransformIdentity;
-                card.center = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
+                card.center = centerOfParentContainer;
+                card.layer.transform = CATransform3DIdentity;
                 [self layoutIfNeeded];
                 _direction = kMoveNone;
                 [self.delegate swipeReset];
             }else{
                 [self.delegate swipeDidEnd:self index:self.index direction:_direction];
             }
-
             
             NSLog(@"UIGestureRecognizerStateEnded frame %@", NSStringFromCGRect(self.frame));
-            
-            NSLog(@"UIGestureRecognizerStateEnded centerOfParentContainer %f %f", centerOfParentContainer.x, centerOfParentContainer.y);
         }
             break;
         default:
@@ -329,6 +328,191 @@
     }
     
 }
+
+/*
+ -(void) handlePanGesture:(UIPanGestureRecognizer*) sender {
+     
+     CardView *card = (CardView*)sender.view;
+     
+     CGFloat width = [UIScreen mainScreen].bounds.size.width;
+     
+    // CGFloat wh = 7.0*(width/393.0);
+     
+     CGPoint point = [sender translationInView:self];
+     
+     NSLog(@"point x: %f", point.x);
+     
+     CGPoint centerOfParentContainer = CGPointMake(width/2, self.center.y);
+     
+     NSLog(@"--- point x: %f", centerOfParentContainer.x + point.x);
+   
+     if(point.x < 0){
+         _direction = kMoveLeft;
+     }else if(point.x > 0){
+         _direction = kMoveRight;
+     }else {
+         _direction = kMoveNone;
+     }
+     
+     CGFloat maxMovePosiotion = (width - self.frame.size.width)/2 - 10;
+     if(((self.index == 0 && _direction == kMoveRight) || (self.isLastCell && _direction == kMoveLeft))){
+         maxMovePosiotion = 0;//maxMovePosiotion*0.9;
+     }
+     
+     NSLog(@"handlePanGesture %f, %f", card.center.x, card.center.y);
+     
+     switch(sender.state) {
+         case UIGestureRecognizerStateBegan:
+             [self.delegate swipeStart:self];
+             break;
+             
+         case UIGestureRecognizerStateChanged:{
+             
+             CGFloat angle = (CGFloat)tan(point.x / (self.frame.size.width * 2.0));
+             
+             if(angle < -0.08){
+                 angle = -0.08;
+             }
+             
+             if(angle > 0.08){
+                 angle = 0.08;
+             }
+             
+             CGFloat percent = (fabs(angle)/0.08);
+             
+             NSLog(@"--- angle: %f percent : %f", angle, percent);
+             
+             CGFloat scale = 0.9 + (1.0-percent)*0.1;
+             
+             NSLog(@"--->> angle: %f percent : %f scale : %f", angle, percent, scale);
+             if((self.index == 0 && _direction == kMoveRight) || (self.isLastCell && _direction == kMoveLeft)){
+                 angle = 0.0f;
+                 scale = 1.0f;
+             }
+             
+             
+             //CGFloat yOffset = percent*wh;
+             CGFloat yOffset = 0.0f;
+ //            if(_direction == kMoveRight && fabs(point.x) < maxMovePosiotion){
+ //                card.center = CGPointMake(centerOfParentContainer.x + point.x, self.center.y);
+ //            }else if(_direction == kMoveLeft && fabs(point.x) < maxMovePosiotion){
+ //                card.center = CGPointMake(centerOfParentContainer.x + point.x, self.center.y);
+ //            }else{
+ //                yOffset = -8.0*percent;
+ //
+ //                CGAffineTransform transform =  CGAffineTransformTranslate(CGAffineTransformIdentity, 0, yOffset);
+ //                transform =  CGAffineTransformScale(transform, scale, scale);
+ //                card.transform = CGAffineTransformRotate(transform, angle);
+ //
+ //                [self.delegate swipeChanged:self index:self.index direction:_direction percent:percent];
+ //            }
+             
+             
+             if(!((self.index == 0 && _direction == kMoveRight) || (self.isLastCell && _direction == kMoveLeft))){
+                 yOffset = -8.0*percent;
+                 CGFloat xx =  point.x;
+                 if(_direction == kMoveRight && fabs(point.x) > maxMovePosiotion){
+                     xx = maxMovePosiotion;
+                 }else if(_direction == kMoveLeft && fabs(point.x) > maxMovePosiotion){
+                     xx = -maxMovePosiotion;
+                 }
+                 
+                 CGAffineTransform transform =  CGAffineTransformTranslate(CGAffineTransformIdentity, xx, yOffset);
+                 transform =  CGAffineTransformScale(transform, scale, scale);
+                 card.transform = CGAffineTransformRotate(transform, angle);
+                 
+                 [self.delegate swipeChanged:self index:self.index direction:_direction percent:percent];
+             }else if (self.index == 0 && _direction == kMoveRight){
+                 CGFloat xx =  point.x;
+                 if(fabs(point.x) > maxMovePosiotion){
+                     xx = maxMovePosiotion;
+                 }
+                 
+                 card.center = CGPointMake(centerOfParentContainer.x + xx, self.center.y);
+                 
+                 //card.transform =  CGAffineTransformTranslate(CGAffineTransformIdentity, xx, 0);
+             }else if (self.isLastCell && _direction == kMoveLeft){
+                 CGFloat xx =  point.x;
+                 if(fabs(point.x) > maxMovePosiotion){
+                     xx = -maxMovePosiotion;
+                 }
+                 
+                 card.center = CGPointMake(centerOfParentContainer.x + xx, self.center.y);
+                 
+                 //card.transform =  CGAffineTransformTranslate(CGAffineTransformIdentity, xx, 0);
+             }
+        
+             
+             
+            
+             
+          
+             
+ //            CGAffineTransform transform = CGAffineTransformScale(CGAffineTransformIdentity, scale, scale);
+ //            card.transform = CGAffineTransformRotate(transform, angle);
+             
+             
+
+ //            if(!((self.index == 0 && _direction == kMoveRight) || (self.isLastCell && _direction == kMoveLeft))){
+ //                [self.delegate swipeChanged:self index:self.index direction:_direction percent:percent];
+ //            }
+        
+             break;
+         }
+         case UIGestureRecognizerStateEnded:{
+             CGFloat angle = (CGFloat)tan(point.x / (self.frame.size.width * 2.0));
+             
+             if(angle < -0.08){
+                 angle = -0.08;
+             }
+             
+             if(angle > 0.08){
+                 angle = 0.08;
+             }
+             
+             CGFloat percent = (fabs(angle)/0.08);
+             
+             NSLog(@"UIGestureRecognizerStateEnded percent %f", percent);
+             
+             if(percent < 1.0){
+                 NSLog(@"UIGestureRecognizerStateEnded percent --- not");
+              
+                 card.transform = CGAffineTransformIdentity;
+                 card.center = CGPointMake(self.frame.size.width/2, self.center.y);
+                 [self layoutIfNeeded];
+                 _direction = kMoveNone;
+                 [self.delegate swipeReset];
+                 
+             }else if(self.index == 0 && _direction == kMoveRight){
+                 //card.transform = CGAffineTransformIdentity;
+                 card.center = centerOfParentContainer;
+                 //CGPointMake(self.frame.size.width/2, self.center.y);
+                 //[self layoutIfNeeded];
+                 //_direction = kMoveNone;
+                 //[self.delegate swipeReset];
+             }else if(self.isLastCell && _direction == kMoveLeft){
+                 card.center = centerOfParentContainer;
+ //                card.transform = CGAffineTransformIdentity;
+ //                card.center = CGPointMake(self.frame.size.width/2, self.center.y);
+ //                [self layoutIfNeeded];
+ //                _direction = kMoveNone;
+                 //[self.delegate swipeReset];
+             }else{
+                 [self.delegate swipeDidEnd:self index:self.index direction:_direction];
+             }
+
+             
+             NSLog(@"UIGestureRecognizerStateEnded frame %@", NSStringFromCGRect(self.frame));
+             
+             NSLog(@"UIGestureRecognizerStateEnded centerOfParentContainer %f %f", centerOfParentContainer.x, centerOfParentContainer.y);
+         }
+             break;
+         default:
+             break;
+     }
+     
+ }
+ */
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
   return YES;

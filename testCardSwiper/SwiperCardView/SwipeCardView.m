@@ -401,14 +401,22 @@
                 
                 if(v.index == index+3){
                     v.hidden = NO;
-                    v.alpha = MIN(percent , 0.8);
+                    v.alpha = MIN(percent , 1.0);
+                }
+                
+                if(v.index == index-2){
+                    v.alpha = MAX(1.0-percent , -.0);
                 }
             }else{
                 [self frameCardViews:v atIndex:v.index atNextIndex:v.index+1  percent:1.0-percent direction:direction];
                 
                 if(v.index == index-3){
                     v.hidden = NO;
-                    v.alpha = MIN(percent , 0.8);
+                    v.alpha = MIN(percent , 1.0);
+                }
+                
+                if(v.index == index+2){
+                    v.alpha = MAX(1.0-percent , -.0);
                 }
             }
         }
@@ -436,11 +444,6 @@
     
     NSLog(@"%d", (int)self.currentIndex);
     
-//    [UIView animateWithDuration:0.5f animations:^{
-//
-//
-//    }];
-    
     for(CardView *v in self.subviews){
         v.transform = CGAffineTransformIdentity;
         [v layoutIfNeeded];
@@ -451,18 +454,7 @@
             v.userInteractionEnabled = NO;
         }
         
-       
-        if(self.previousIndex == v.index){
-//            [self frameCardViews:v atIndex:v.index-1];
-//            [UIView animateWithDuration:0.5f animations:^{
-//                [self frameCardViews:v atIndex:v.index];
-//            }];
-            
-            
-            [self frameCardViews:v atIndex:v.index];
-        }else{
-            [self frameCardViews:v atIndex:v.index];
-        }
+        [self frameCardViews:v atIndex:v.index];
         
         // 화면 숨기 처리
         if(v.index < self.currentIndex - 2){
@@ -558,7 +550,6 @@
         NSLog(@"====>>>> delelte index right ok view item count--- %d", (int)self.subviews.count);
     }
     
-    
     NSLog(@"====>>>> add index %d", (int)self.currentIndex+4);
     
     // 오른쪽 아이템 추가 하기
@@ -595,12 +586,6 @@
         }
         //NSLog(@"====>>>> delelte index right ok--- %d", (int)removeItem);
     }
-    
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.0 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-//
-//
-//
-//    });
 }
 
 -(void) actionCardView:(CardView*)cardView{
@@ -611,7 +596,7 @@
 -(void) swipeReset{
    // _cardPadding = 40;
     _currentIndex = _previousIndex;
-    [UIView animateWithDuration:0.5f animations:^{
+    [UIView animateWithDuration:0.0f animations:^{
         for(CardView *v in self.subviews){
             v.transform = CGAffineTransformIdentity;
             [v layoutIfNeeded];
