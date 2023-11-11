@@ -208,13 +208,9 @@
     transform = CATransform3DRotate(transform, degress*M_PI/180, 0, 0, 1);
     cardView.layer.transform = transform;
     
-    
-//    cardView.layer.transform = CGAffineTransformRotate(CGAffineTransformIdentity, degress*M_PI/180);
-    
-    
     NSLog(@"oooo frameCardViews index : %lu xoffset %f, s: %f d: %f %@",index, xoffset, scale, degress, NSStringFromCGRect(cardView.frame) );
-   // [cardView setNeedsLayout];
-   // [cardView layoutIfNeeded];
+    [cardView setNeedsLayout];
+    [cardView layoutIfNeeded];
     
 //
   //  NSLog(@"oooo cardView.frame %d : scale : %f %@", (int)index, scale, NSStringFromCGRect(cardView.frame));
@@ -227,11 +223,10 @@
     
     CGFloat width = [UIScreen mainScreen].bounds.size.width;
     
-    CGFloat orgW = _orgW; // self.orgRect.size.width;
-    CGFloat orgH = _orgH; // self.orgRect.size.height;
+    CGFloat orgW = _orgW;
+    CGFloat orgH = _orgH; 
     CGFloat orgCenterX =  width/2.0f;
   
-    
     CGFloat xoffset = [self xOffset:index];
     CGFloat nextxoffset = [self xOffset:nextIndex];
     

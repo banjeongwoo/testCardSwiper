@@ -258,15 +258,15 @@
         case UIGestureRecognizerStateEnded:{
             CGFloat angle = (CGFloat)tan(point.x / (self.frame.size.width * 2.0));
             
-            if(angle < -0.08){
-                angle = -0.08;
+            if(angle < -0.1){
+                angle = -0.1;
             }
             
-            if(angle > 0.08){
-                angle = 0.08;
+            if(angle > 0.1){
+                angle = 0.1;
             }
             
-            CGFloat percent = (fabs(angle)/0.08);
+            CGFloat percent = (fabs(angle)/0.1);
             
             NSLog(@"UIGestureRecognizerStateEnded percent %f", percent);
             
