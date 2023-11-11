@@ -73,8 +73,6 @@
 -(void) setCurrnetPositonIndex:(NSInteger) index{
     self.currentIndex = index;
     [self reloadData];
-    
-   
 }
 
 -(void) reloadData{
@@ -98,9 +96,6 @@
     NSInteger startIdx = MAX(0, self.currentIndex-3);
     NSInteger endIdx = MIN(_numberOfCards, startIdx+_cardsToBeVisible+1);
        
-    //_realCurrentIndex = self.currentIndex;
-    
-    //for(int i=0; i < MIN(_numberOfCards, _cardsToBeVisible); i++){
     for(NSInteger i=startIdx; i < endIdx; i++){
         CardView *view = [self.dataSource cardAtIndex:i];
         view.index = i;
@@ -186,8 +181,8 @@
     CGRect cardViewFrame = CGRectZero;
   
     CGFloat orgCenterX =  width/2.0f;
-    CGFloat orgw = _orgW;//self.orgRect.size.width;
-    CGFloat orgH = _orgH;//self.orgRect.size.height;
+    CGFloat orgw = _orgW;
+    CGFloat orgH = _orgH;
     
     cardView.layer.zPosition = [self zIndex:index];
     CGFloat xoffset = [self xOffset:index];
