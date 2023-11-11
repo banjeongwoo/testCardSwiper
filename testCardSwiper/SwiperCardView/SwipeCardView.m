@@ -342,13 +342,11 @@
 
 -(void) swipeStart:(CardView*) cardView{
     _currentPreGestureZindex = cardView.layer.zPosition;
-    //_cardPadding = 55;
-    //_cardPadding = 40;
     _nextPreIndex = -1;
     NSLog(@"swipeStart !!!!");
-    for(CardView *v in self.subviews){
-        [self frameCardViews:v atIndex:v.index];
-    }
+//    for(CardView *v in self.subviews){
+//        [self frameCardViews:v atIndex:v.index];
+//    }
 }
 
 -(void) swipeChanged:(CardView*) cardView index:(NSInteger) index direction:(EnumCardSwipe) direction percent:(CGFloat) percent{
@@ -374,7 +372,6 @@
                 }
             }
         }
-        
     }else{
         if(_nextPreIndex != -1){
             for(CardView *v in self.subviews){
@@ -405,7 +402,15 @@
                 }
                 
                 if(v.index == index-2){
-                    v.alpha = MAX(1.0-percent , -.0);
+                    v.alpha = MAX(1.0-percent , -1.0);
+                }
+                
+                if(v.index > index+3){
+                    v.hidden = YES;
+                }
+                
+                if(v.index < index-2){
+                    v.hidden = YES;
                 }
             }else{
                 [self frameCardViews:v atIndex:v.index atNextIndex:v.index+1  percent:1.0-percent direction:direction];
@@ -416,7 +421,15 @@
                 }
                 
                 if(v.index == index+2){
-                    v.alpha = MAX(1.0-percent , -.0);
+                    v.alpha = MAX(1.0-percent , -1.0);
+                }
+                
+                if(v.index > index+2){
+                    v.hidden = YES;
+                }
+                
+                if(v.index < index-3){
+                    v.hidden = YES;
                 }
             }
         }
@@ -469,15 +482,17 @@
     
     [self cardItem_add_and_remove];
     
-    for(CardView *v in self.subviews){
-        NSLog(@"zPosition index %d zPosition: %f", (int)v.index, v.layer.zPosition);
-    }
+
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
         [self.delegate SwipeCardView:cardView currentPage:self.currentIndex];
     });
     
     self.previousIndex = self.currentIndex;
+    
+//    for(CardView *v in self.subviews){
+//        NSLog(@"zPosition index %d zPosition: %f", (int)v.index, v.layer.zPosition);
+//    }
     NSLog(@"self.currentIndex : %d", (int)self.currentIndex);
     
 }
@@ -497,7 +512,6 @@
                 }
             }
         }
-        
     }
     
     // 왼쪽 아이템 추가하기
@@ -509,7 +523,7 @@
             for(CardView *v in self.subviews){
                 if(v.index == addItem){
                     isExist = true;
-                    break;;
+                    break;
                 }
             }
             
@@ -594,7 +608,6 @@
 }
 
 -(void) swipeReset{
-   // _cardPadding = 40;
     _currentIndex = _previousIndex;
     [UIView animateWithDuration:0.0f animations:^{
         for(CardView *v in self.subviews){
@@ -610,7 +623,6 @@
             [self frameCardViews:v atIndex:v.index];
             
             //--show hide
-            
             if(v.index < self.currentIndex - 2){
                 v.hidden = YES;
             }else if(v.index > self.currentIndex + 2){
