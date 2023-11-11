@@ -68,27 +68,10 @@
 
 
 -(void) configureShadowView {
-    //    _shadowView = [[UIView alloc] init];
-    //    _shadowView.backgroundColor = [UIColor blackColor];
-    //    _shadowView.alpha = 0.15;
-    //
-    //
-    //    [self addSubview:_shadowView];
-    //
-    //    _shadowView.translatesAutoresizingMaskIntoConstraints = false;
-    //    [_shadowView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor].active = true;
-    //    [_shadowView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor].active = true;
-    //    [_shadowView.topAnchor constraintEqualToAnchor:self.topAnchor].active = true;
-    //    [_shadowView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor].active = true;
-    //
-    //    _shadowView.layer.shadowColor = [UIColor blackColor].CGColor;
-    //    _shadowView.layer.shadowOffset = CGSizeMake(0, 10);
-    //    _shadowView.layer.shadowOpacity = 1.0;
-    //    _shadowView.layer.shadowRadius = 10.0;
-    
     _shadowImageView = [[UIImageView alloc] init];
     //_shadowImageView.backgroundColor = [UIColor clearColor];
     //_shadowImageView.alpha = 1.0;
+    _shadowImageView.contentMode = UIViewContentModeScaleToFill;
     _shadowImageView.image = [UIImage imageNamed:@"icolpayshadow"];
     
     [self addSubview:_shadowImageView];
@@ -201,20 +184,12 @@
     
     CGFloat width = [UIScreen mainScreen].bounds.size.width;
     
-    CGFloat baseyOffset = 10.0*(width/393.0);
-    
-    if((self.index == 0 && _direction == kMoveRight) || (self.isLastCell && _direction == kMoveLeft)){
-        baseyOffset = 0.0f;
-    }
+    CGFloat baseyOffset = 10.0f*(width/393.0);
     
     CGPoint point = [sender translationInView:self];
-    
-    NSLog(@"point x: %f", point.x);
-    
     CGPoint centerOfParentContainer = CGPointMake(width/2, self.center.y);
-    
-    NSLog(@"--- point x: %f", centerOfParentContainer.x + point.x);
-  
+    NSLog(@"point x: %f", point.x);
+
     if(point.x < 0){
         _direction = kMoveLeft;
     }else if(point.x > 0){
@@ -223,9 +198,12 @@
         _direction = kMoveNone;
     }
     
-    CGFloat maxMovePosiotion = (width - self.frame.size.width)/2.0f - 12;
+    CGFloat maxMovePosiotion = (width - self.frame.size.width)/2.0f - 5.0f;
     
-    NSLog(@"handlePanGesture %f, %f", card.center.x, card.center.y);
+    if((self.index == 0 && _direction == kMoveRight) || (self.isLastCell && _direction == kMoveLeft)){
+        baseyOffset = 0.0f;
+        maxMovePosiotion = 10.0f*(width/393.0f);
+    }
     
     switch(sender.state) {
         case UIGestureRecognizerStateBegan:
@@ -234,7 +212,7 @@
             
         case UIGestureRecognizerStateChanged:{
             
-            CGFloat angle = (CGFloat)tan(point.x / (self.frame.size.width * 2.0));
+            CGFloat angle = (CGFloat)tan(point.x / (self.frame.size.width * 2.0f));
             
             if(angle < -0.08){
                 angle = -0.08;
@@ -245,9 +223,7 @@
             }
             
             CGFloat percent = (fabs(angle)/0.08);
-            
-            NSLog(@"--- angle: %f percent : %f", angle, percent);
-            
+        
             CGFloat yOffset = -baseyOffset*percent;
         
             if( fabs(point.x) < maxMovePosiotion){
@@ -273,8 +249,6 @@
 //            CGAffineTransform transform = CGAffineTransformScale(CGAffineTransformIdentity, scale, scale);
 //            card.transform = CGAffineTransformRotate(transform, angle);
             
-            
-
             if(!((self.index == 0 && _direction == kMoveRight) || (self.isLastCell && _direction == kMoveLeft))){
                 [self.delegate swipeChanged:self index:self.index direction:_direction percent:percent];
             }

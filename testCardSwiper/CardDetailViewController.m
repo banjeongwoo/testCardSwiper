@@ -157,7 +157,7 @@
     
     cell.contentView.layer.cornerRadius = 8;
     cell.contentView.layer.masksToBounds = true;
-    cell.titleLabel.text = [NSString stringWithFormat:@"%lu", indexPath.item];
+    cell.titleLabel.text = [NSString stringWithFormat:@"%lu", indexPath.item+1];
     return cell;
 }
 
@@ -172,7 +172,7 @@
     ViewController *topViewController = (ViewController*) rootView.navigationController.topViewController;
    
     [self dismissViewControllerAnimated:YES completion:^{
-        //[topViewController update:indexPath.item];
+        [topViewController update:indexPath.item];
     }];
     
 }

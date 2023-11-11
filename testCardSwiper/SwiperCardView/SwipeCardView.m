@@ -73,6 +73,8 @@
 -(void) setCurrnetPositonIndex:(NSInteger) index{
     self.currentIndex = index;
     [self reloadData];
+    
+   
 }
 
 -(void) reloadData{
@@ -122,10 +124,13 @@
         // 화면 숨기 처리
         if(view.index < self.currentIndex - 2){
             view.hidden = YES;
+            view.alpha = 0.0f;
         }else if(view.index > self.currentIndex + 2){
             view.hidden = YES;
+            view.alpha = 0.0f;
         }else{
             view.hidden = NO;
+            view.alpha = 1.0f;
         }
         
         [self.cardViews insertObject:view atIndex:0];
