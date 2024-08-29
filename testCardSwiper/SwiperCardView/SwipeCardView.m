@@ -211,6 +211,45 @@
   //  NSLog(@"oooo cardView.frame %d : scale : %f %@", (int)index, scale, NSStringFromCGRect(cardView.frame));
 }
 
+
+-(void) frameCardViewsAni:(CardView *) cardView atIndex:(NSInteger) index {
+    CGFloat width = [UIScreen mainScreen].bounds.size.width;
+    
+    CGRect cardViewFrame = CGRectZero;
+  
+    CGFloat orgCenterX =  width/2.0f;
+    CGFloat orgw = _orgW;
+    CGFloat orgH = _orgH;
+    
+    cardView.layer.zPosition = [self zIndex:index];
+    CGFloat xoffset = [self xOffset:index];
+    CGFloat scale = [self scale:index];
+    CGFloat degress = [self rotationDegrees:index];
+    
+    cardViewFrame.origin.x = 0;
+    cardViewFrame.origin.y = 0;
+    cardViewFrame.size.width = roundf(orgw*scale);
+    cardViewFrame.size.height = roundf(orgH*scale);
+    cardView.frame = cardViewFrame;
+    
+    
+    CATransform3D transform = CATransform3DIdentity;
+    //transform.m32 = 1.0/500;
+    //transform.m34 = 1.0/900.0;  // for perspective
+    transform = CATransform3DRotate(transform, degress*M_PI/180, 0, 0, 1);
+    cardView.layer.transform = transform;
+    
+    cardView.center = CGPointMake(orgCenterX + xoffset, self.center.y);
+    
+
+    NSLog(@"oooo frameCardViews index : %lu xoffset %f, s: %f d: %f %@",index, xoffset, scale, degress, NSStringFromCGRect(cardView.frame) );
+//    [cardView setNeedsLayout];
+//    [cardView layoutIfNeeded];
+    
+//
+  //  NSLog(@"oooo cardView.frame %d : scale : %f %@", (int)index, scale, NSStringFromCGRect(cardView.frame));
+}
+
 -(void) frameCardViews:(CardView *) cardView atIndex:(NSInteger) index atNextIndex:(NSInteger)nextIndex percent:(CGFloat) percent direction:(EnumCardSwipe) direction{
     NSLog(@"nextIndex %d", (int)nextIndex);
     
@@ -453,8 +492,8 @@
     NSLog(@"%d", (int)self.currentIndex);
     
     for(CardView *v in self.subviews){
-        v.transform = CGAffineTransformIdentity;
-        [v layoutIfNeeded];
+//        v.transform = CGAffineTransformIdentity;
+//        [v layoutIfNeeded];
         
         if(v.index == self.currentIndex){
             v.userInteractionEnabled = YES;
@@ -462,7 +501,30 @@
             v.userInteractionEnabled = NO;
         }
         
-        [self frameCardViews:v atIndex:v.index];
+        if(v.index == self.previousIndex){
+          
+//            [UIView animateWithDuration:0.5
+//                                  delay:0
+//                                options:UIViewAnimationOptionBeginFromCurrentState
+//                             animations:^{
+//                [self frameCardViewsAni:v atIndex:v.index];
+//             } completion:^(BOOL finished) {
+//                 
+//             }];
+            
+            [UIView animateWithDuration:0.5 delay:0 usingSpringWithDamping:1.0 initialSpringVelocity:0.0 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionAllowUserInteraction animations:^{
+                [self frameCardViewsAni:v atIndex:v.index];
+            } completion:^(BOOL finished) {
+                
+            }];
+            
+//            (void)animateWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay usingSpringWithDamping:(CGFloat)dampingRatio initialSpringVelocity:(CGFloat)velocity options:(UIViewAnimationOptions)options animations:(void (^)(void))animations completion:(void (^ __nullable)(BOOL finished))completion NS_SWIFT_DISABLE_ASYNC API_AVAILABLE(ios(7.0));
+            
+        }else{
+            [self frameCardViews:v atIndex:v.index];
+        }
+        
+       
         
         // 화면 숨기 처리
         if(v.index < self.currentIndex - 2){

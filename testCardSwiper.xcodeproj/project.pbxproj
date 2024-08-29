@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4687CA2C2C7FEBD300452B41 /* StickyScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4687CA2B2C7FEBD300452B41 /* StickyScrollViewController.m */; };
+		4687CA2F2C80038700452B41 /* QuickMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4687CA2E2C80038700452B41 /* QuickMenuView.m */; };
 		46D2FE5A2AEFC0930004CC11 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46D2FE592AEFC0930004CC11 /* MainViewController.m */; };
 		C81451402AEF8B4C00366C05 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = C814513F2AEF8B4C00366C05 /* Message.m */; };
 		C814514C2AEF8E0800366C05 /* UIColor+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = C814514B2AEF8E0800366C05 /* UIColor+Extension.m */; };
@@ -44,6 +46,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4687CA2A2C7FEBD300452B41 /* StickyScrollViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StickyScrollViewController.h; sourceTree = "<group>"; };
+		4687CA2B2C7FEBD300452B41 /* StickyScrollViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StickyScrollViewController.m; sourceTree = "<group>"; };
+		4687CA2D2C80038700452B41 /* QuickMenuView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuickMenuView.h; sourceTree = "<group>"; };
+		4687CA2E2C80038700452B41 /* QuickMenuView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = QuickMenuView.m; sourceTree = "<group>"; };
 		46D2FE552AEFC0360004CC11 /* testCardSwiper-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "testCardSwiper-Bridging-Header.h"; sourceTree = "<group>"; };
 		46D2FE582AEFC0930004CC11 /* MainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		46D2FE592AEFC0930004CC11 /* MainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
@@ -134,6 +140,10 @@
 				C87018442AE5F22500579935 /* ViewController.m */,
 				C81451552AEFA2D100366C05 /* CardDetailViewController.h */,
 				C81451562AEFA2D100366C05 /* CardDetailViewController.m */,
+				4687CA2A2C7FEBD300452B41 /* StickyScrollViewController.h */,
+				4687CA2B2C7FEBD300452B41 /* StickyScrollViewController.m */,
+				4687CA2D2C80038700452B41 /* QuickMenuView.h */,
+				4687CA2E2C80038700452B41 /* QuickMenuView.m */,
 				46D2FE582AEFC0930004CC11 /* MainViewController.h */,
 				46D2FE592AEFC0930004CC11 /* MainViewController.m */,
 				C87018462AE5F22500579935 /* Main.storyboard */,
@@ -312,10 +322,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4687CA2C2C7FEBD300452B41 /* StickyScrollViewController.m in Sources */,
 				C87187FB2AE8E2900001C00E /* PayRcmdCardView.m in Sources */,
 				C87018452AE5F22500579935 /* ViewController.m in Sources */,
 				46D2FE5A2AEFC0930004CC11 /* MainViewController.m in Sources */,
 				C814514C2AEF8E0800366C05 /* UIColor+Extension.m in Sources */,
+				4687CA2F2C80038700452B41 /* QuickMenuView.m in Sources */,
 				C870183F2AE5F22500579935 /* AppDelegate.m in Sources */,
 				C87187F82AE8B0FF0001C00E /* PayRegCardView.m in Sources */,
 				C87018752AE5F4B900579935 /* CardView.m in Sources */,

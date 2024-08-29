@@ -11,6 +11,7 @@
 #import "PayRcmdCardView.h"
 #import "CardDetailViewController.h"
 #import "UIColor+Extension.h"
+#import "StickyScrollViewController.h"
 
 #define USE_MAX_COUNT      4 //1000
 
@@ -431,6 +432,21 @@
   
 }
 
+- (IBAction)stickytestTouchUpInside:(id)sender {
+    StickyScrollViewController *controller = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"StickyScrollViewController"];
+    [self.navigationController pushViewController:controller animated:YES];
+    
+//
+//    controller.modalPresentationStyle = UIModalPresentationFullScreen;
+//
+//    [controller setData:@(90)];
+//    [self.navigationController presentViewController:controller
+//                                            animated:YES
+//                                            completion:nil];
+    
+}
+
+
 -(void) update:(NSInteger) idx{
     [_swipeCardView setCurrnetPositonIndex:idx];
 }
@@ -554,7 +570,7 @@
         self.isSetup = YES;
     }
     
-    CGFloat offset = 0;
+//    CGFloat offset = 0;
     CGFloat width = self.collectionView.bounds.size.width;
 //    NSInteger numberOfItem = (NSInteger)[self.collectionView numberOfItemsInSection:0];
 //    for(int i = 0; i < numberOfItem; i++){
