@@ -115,6 +115,7 @@ const CGFloat kNewPageLoadScrollPercentageThreshold = 0.66;
 - (void)collectionView:(UICollectionView *)collectionView performDropWithCoordinator:(id<UICollectionViewDropCoordinator>)coordinator{
     NSLog(@"performDropWithCoordinator");
     NSIndexPath *destinationIndexPath = coordinator.destinationIndexPath;
+    
     if(destinationIndexPath != nil){
         
         NSIndexPath *sourceIndexPath = [coordinator.items firstObject].sourceIndexPath;
